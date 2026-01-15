@@ -146,14 +146,6 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 
 ---
 
-### 🛠 Ramas de soporte
-
-- `docs` → documentación y README.
-- `config` → configuraciones del proyecto.
-- `hotfix` → correcciones rápidas en producción.
-
----
-
 ## 🔁 Ejemplo de flujo de trabajo
 
 1. Cada persona trabaja en su propia rama:
