@@ -106,3 +106,63 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 > *(Ponerlo acá)*
 
 ---
+
+## 🌿 Estructura de Ramas en GitHub
+
+### 🔑 Ramas principales
+
+- `main` → versión estable y lista para entregar.
+- `develop` → donde se integra todo lo que se va desarrollando.
+
+---
+
+### 🎨 Ramas por áreas
+
+#### Frontend
+- `frontend/html`
+- `frontend/css`
+- `frontend/js`
+- `frontend/figma`
+
+#### Backend
+- `backend/api`
+- `backend/database`
+- `backend/json-node`
+
+#### 🕶 Simulación 3D
+- `simulacion/3d-js`
+
+#### 🌐 WordPress
+- `wordpress`
+
+---
+
+### ⚙️ Ramas por funcionalidades
+
+- `feature/avatar-3d`
+- `feature/catalogo`
+- `feature/seleccion-competencias`
+- `feature/contratar-servicios`
+
+---
+
+### 🛠 Ramas de soporte
+
+- `docs` → documentación y README.
+- `config` → configuraciones del proyecto.
+- `hotfix` → correcciones rápidas en producción.
+
+---
+
+## 🔁 Ejemplo de flujo de trabajo
+
+1. Cada persona trabaja en su propia rama:
+   - Marta en CSS → `frontend/css`
+   - Jorge en base de datos → `backend/database`
+   - Isma en 3D → `simulacion/3d-js`
+
+2. Cuando termina una tarea:
+   - Se hace un **Pull Request** hacia `develop`.
+
+3. Cuando todo está probado y validado:
+   - `develop` se fusiona con `main`.
