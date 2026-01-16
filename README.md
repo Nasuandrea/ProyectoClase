@@ -229,3 +229,5 @@ Cada usuario tendrá un panel privado donde podrá gestionar:
 - Lista de competencias
 - Servicios que ofrece
 - Información visible en el catálogo
+
+---
