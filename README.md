@@ -415,3 +415,79 @@ Crear una experiencia:
 - Inspirada en videojuegos
 - Que convierta la selección de un autónomo en algo dinámico y divertido
 - Manteniendo una funcionalidad realista de contratación profesional
+
+---
+
+## ⭐ Sistema de Valoración de Autónomos
+
+Cada autónomo contará con un sistema de valoración visible dentro del cuadro de información, junto a sus skills.  
+Este sistema mostrará de forma clara y visual la reputación del profesional:
+
+Ejemplo:
+> ⭐⭐⭐⭐⚪ (5)
+
+Donde:
+- Las estrellas representan la valoración media.
+- El número entre paréntesis indica cuántas personas han valorado a ese autónomo.
+- Se utilizará una escala de 1 a 5 estrellas.
+
+---
+
+## 📍 Ubicación en la Interfaz
+
+Las valoraciones aparecerán:
+- En la vista expandida del autónomo.
+- Dentro del panel de información, junto a:
+  - Skills
+  - Ubicación
+  - Modalidad de trabajo (online / presencial)
+
+Esto permite que el usuario:
+- Evalúe rápidamente la calidad del servicio.
+- Compare varios autónomos de forma visual.
+- Tenga una referencia de confianza antes de contactar.
+
+---
+
+## 🎮 Experiencia de Usuario
+
+El sistema refuerza la estética de videojuego:
+- Las estrellas funcionan como “nivel” o “poder” del personaje.
+- Cuantas más estrellas, más “pro” es el avatar.
+- Hace la elección más divertida e intuitiva.
+
+---
+
+## 🗄 Funcionamiento Técnico (resumen)
+
+En base de datos se almacenará:
+- Valoración total acumulada.
+- Número de valoraciones.
+
+Ejemplo de campos:
+- `rating_total`
+- `rating_count`
+
+La media se calcula así:
+- rating_media = rating_total / rating_count
+
+
+Y se traduce visualmente en estrellas:
+
+| Media | Visual |
+|------|-------|
+| 5.0  | ⭐⭐⭐⭐⭐ |
+| 4.0  | ⭐⭐⭐⭐⚪ |
+| 3.0  | ⭐⭐⭐⚪⚪ |
+| 2.0  | ⭐⭐⚪⚪⚪ |
+| 1.0  | ⭐⚪⚪⚪⚪ |
+
+---
+
+## 🧠 Objetivo
+
+El sistema de estrellas:
+- Aporta realismo a la plataforma.
+- Motiva a los usuarios a elegir mejor.
+- Refuerza la gamificación del proyecto.
+- Hace que el catálogo sea más dinámico y creíble.
