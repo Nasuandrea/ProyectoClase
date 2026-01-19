@@ -263,3 +263,155 @@ WEB AULA VIRTUAL
         ├── Historial de Contrataciones
         └── Estado de pedidos
 
+---
+
+## 🎮 Experiencia de Usuario (UX) y Funcionamiento de la Plataforma
+
+La página web funciona como un **catálogo interactivo de 12 autónomos**, presentado con una estética inspirada en la **selección de personajes de videojuegos**. El usuario no solo navega por perfiles, sino que “elige” al profesional que mejor encaja con sus necesidades según sus habilidades, categoría y localización.
+
+---
+
+## 🧭 Navegación Principal (Nav Sticky)
+
+En la parte superior se encuentra un **nav fijo (sticky)** que siempre permanece visible:
+
+- 🔍 **Buscador**: permite buscar por:
+  - Nombre del autónomo  
+  - Skills  
+  - Localización (ciudad/provincia)
+- 🏷 **Logo** a la izquierda.
+- 👤 **Login** a la derecha:
+  - Si el usuario no está logueado → aparece el icono de Login.
+  - Si está logueado → aparece un pequeño avatar de usuario.
+
+Esto permite una navegación rápida y constante desde cualquier punto de la web.
+
+---
+
+## 🏷 Identidad de la Página
+
+Debajo del nav aparece:
+- El **nombre de la plataforma**
+- El **slogan**, que refuerza la idea de selección de talento y estilo videojuego.
+
+Ejemplo:
+> *Elige tu avatar. Elige sus habilidades. Contrata su talento.*
+
+---
+
+## 🎯 Sistema de Categorías (Filtros)
+
+Debajo del título se muestran las **categorías de servicios**:
+- Frontend  
+- Backend  
+- Diseño  
+- 3D  
+- etc.
+
+Características:
+- Se pueden seleccionar **una o varias categorías**.
+- Funcionan como **filtros activos**.
+- Al marcar categorías, las tarjetas (cards) se actualizan automáticamente.
+
+---
+
+## 🃏 Catálogo de Cards
+
+Se muestran tarjetas con:
+- Imagen representativa de cada autónomo
+- Nombre o identificador
+
+Las cards:
+- Se filtran según:
+  - Categorías seleccionadas
+  - Texto introducido en el buscador
+- Permiten una vista rápida de todos los profesionales disponibles.
+
+---
+
+## 🦸 Vista de Perfil (Al hacer clic en una Card)
+
+Cuando el usuario hace clic en una tarjeta:
+
+1. La tarjeta seleccionada se **expande**.
+2. Aparece una vista detallada:
+   - A la izquierda:
+     - 🕺 **Avatar 3D animado**
+     - Botón de **Contacto** debajo
+   - A la derecha:
+     - 🧠 Lista de **skills**
+     - 📍 **Ubicación** (ciudad / provincia)
+     - 🌐 Modalidad del servicio:
+       - Presencial
+       - Online
+       - O ambos
+
+3. Debajo:
+   - Aparecen las **otras cards relacionadas**, es decir, las que pasaron el filtro inicial.
+
+Esto mantiene el contexto de búsqueda mientras se explora un perfil concreto.
+
+---
+
+## 📩 Sistema de Contacto
+
+Al pulsar el botón **Contacto**:
+
+- El resto de la página se **desenfoca**.
+- Solo quedan visibles:
+  - El avatar
+  - El panel de información
+
+El panel de skills hace un **efecto flip** y se transforma en un **formulario de contacto**:
+
+Campos del formulario:
+- 🧑 Nombre
+- 📧 Email
+- 📝 Descripción del servicio requerido
+
+Botones:
+- 📤 **Enviar**
+- 🔙 **Atrás** (vuelve a la vista del perfil)
+
+Esto genera una sensación de experiencia inmersiva y cuidada, muy similar a una interfaz de videojuego.
+
+---
+
+## 👣 Flujo completo del usuario
+
+1. Entra en la web.
+2. Usa el buscador o las categorías para filtrar.
+3. Visualiza el catálogo de autónomos.
+4. Selecciona uno como si fuera un personaje.
+5. Examina:
+   - Skills
+   - Ubicación
+   - Modalidad de trabajo
+6. Pulsa en **Contacto**.
+7. Rellena el formulario.
+8. Envía la solicitud de servicio.
+
+---
+
+## 🦶 Footer
+
+Al final de la página:
+
+- A la izquierda:
+  - 📜 Texto legal
+- A la derecha:
+  - Iconos de redes sociales:
+    - Facebook
+    - Instagram
+    - X / Twitter
+
+---
+
+## 🎯 Objetivo de la Experiencia
+
+Crear una experiencia:
+- Visualmente atractiva
+- Intuitiva
+- Inspirada en videojuegos
+- Que convierta la selección de un autónomo en algo dinámico y divertido
+- Manteniendo una funcionalidad realista de contratación profesional
