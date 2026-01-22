@@ -51,7 +51,7 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 
 | Responsables |
 |-------------|
-| **Alex**, **Marta**, **Carlos** |
+| **Alex**, **Carlos** |
 
 ---
 
