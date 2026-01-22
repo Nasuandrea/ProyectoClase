@@ -9,11 +9,13 @@ CREATE TABLE users (
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
+    enlaces VARCHAR(500) NOT NULL,
     descripcion TEXT,
     ciudad VARCHAR(100),
     provincia VARCHAR(100),
     modalidad ENUM('presencial', 'online', 'mixto') DEFAULT 'online',
-    avatar VARCHAR(255), -- ruta o nombre del avatar 3D asignado
+    avatar3D VARCHAR(255), -- ruta o nombre del avatar 3D asignado
+    avatar2D VARCHAR(255), 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -53,17 +55,6 @@ CREATE TABLE user_skills (
     PRIMARY KEY (user_id, skill_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
-);
-
--- =========================
--- SISTEMA DE VALORACIÓN
--- =========================
-CREATE TABLE ratings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    rating INT CHECK (rating BETWEEN 1 AND 5),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- =========================
