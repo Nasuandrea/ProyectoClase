@@ -97,7 +97,6 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 | Responsables |
 |-------------|
 | **Isma**, **Mati** |
-| Soporte |
 |-------------|
 | **Alex** (Fotos) |
 
