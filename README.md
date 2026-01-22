@@ -493,3 +493,87 @@ El sistema de estrellas:
 - Motiva a los usuarios a elegir mejor.
 - Refuerza la gamificación del proyecto.
 - Hace que el catálogo sea más dinámico y creíble.
+
+---
+
+## 🖼 Diseño 
+
+HOME
++-------------------------------------------------------+
+|  <HEADER> (Logo 🐱 | Buscador 🔍 | Login)             |
++-------------------------------------------------------+
+|                                                       |
+|  <SECTION class="hero">                               |
+|       [ TITULAR: PROFESIONALES CON IDENTIDAD... ]     |
+|       [ Slogan ]                                      |
+|                                                       |
++-------------------------------------------------------+
+|  <NAV class="categorias">                             |
+|  [Btn] [Btn] [Btn] [Btn] [Btn] [Btn] (Grid 6 col)     |
+|  [Btn] [Btn] [Btn] [Btn] [Btn] [Btn]                  |
++-------------------------------------------------------+
+|  <MAIN class="grid-profesionales">                    |
+|                                                       |
+|  +-----------+   +-----------+   +-----------+        |
+|  | Card 1    |   | Card 2    |   | Card 3    |        |
+|  +-----------+   +-----------+   +-----------+        |
+|  | Card 4    |   | Card 5    |   | Card 6    |        |
+|  +-----------+   +-----------+   +-----------+        |
+|                                                       |
++-------------------------------------------------------+
+|  <FOOTER> (Legal | Flecha Arriba | Redes)             |
++-------------------------------------------------------+
+
+
+PERFIL
++-------------------------------------------------------+
+|  <HEADER> (Igual que la Home)                         |
++-------------------------------------------------------+
+|  <MAIN class="perfil-container">                      |
+|                                                       |
+|     [ TÍTULO: Nombre del Profesional / Puesto ]       |
+|                                                       |
+|     +---------------------+  +---------------------+  |
+|     | COLUMNA IZQUIERDA   |  | COLUMNA DERECHA     |  |
+|     |                     |  |                     |  |
+|     |  (Avatar 3D         |  |  INFO TRABAJADOR    |  |
+|     |   Animado /         |  |  SELECCIONADO:      |  |
+|     |   Giratorio)        |  |  ~~~~~~~~~~~~~~~~   |  |
+|     |                     |  |  ~~~~~~~~~~~~~~~~   |  |
+|     |  [BTN CONTACTAR] -> |  |  ~~~~~~~~~~~~~~~~   |  |
+|     +---------------------+  +---------------------+  |
+|                                                       |
+|     <SECTION class="relacionados">                    |
+|     "Otros candidatos relacionados"                   |
+|     +-------+   +-------+   +-------+                 |
+|     | Mini  |   | Mini  |   | Mini  |                 |
+|     | Card  |   | Card  |   | Card  |                 |
+|     +-------+   +-------+   +-------+                 |
+|                                                       |
++-------------------------------------------------------+
+|  <FOOTER>                                             |
++-------------------------------------------------------+
+
+CONTACTO
++-------------------------------------------------------+
+|  <HEADER> (Igual que la Home)                         |
++-------------------------------------------------------+
+|  <MAIN class="contacto-wrapper">                      |
+|                                                       |
+|   +-------------------+    +-----------------------+  |
+|   |  CARD REFERENCIA  |    | FORMULARIO            |  |
+|   | (A quién escribo) |    |                       |  |
+|   |                   |    | [ Input: Nombre    ]  |  |
+|   |   (Foto Pequeña)  |    |                       |  |
+|   |     "Andrea"      |    | [ Input: Email     ]  |  |
+|   |                   |    |                       |  |
+|   |   "Diseñadora"    |    | [ Textarea:        ]  |  |
+|   |                   |    | [ Descripción...   ]  |  |
+|   |                   |    | [                  ]  |  |
+|   |                   |    |                       |  |
+|   +-------------------+    | [BTN ATRÁS][BTN ENV]  |  |
+|                            +-----------------------+  |
+|                                                       |
++-------------------------------------------------------+
+|  <FOOTER>                                             |
++-------------------------------------------------------+
