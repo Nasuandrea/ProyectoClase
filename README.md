@@ -41,9 +41,9 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 
 ### 🎨 Estilos (CSS)
 
-| Responsables |
+| Responsables y Soporte|
 |-------------|
-| **Mat**, **Marta**, **Néstor** |
+| **Marta**, **Néstor** , **Daysi**|
 
 ---
 
@@ -103,7 +103,7 @@ Un **aula virtual de personas simuladas**, presentada en forma de **catálogo**,
 ## 🏷 Nombre del Proyecto
 
 > ✏️ **Nombre del proyecto:**  
-> *(Ponerlo acá)*
+> Autonomix
 
 ---
 
