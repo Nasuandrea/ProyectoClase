@@ -233,6 +233,7 @@ Cada usuario tendrá un panel privado donde podrá gestionar:
 - Información visible en el catálogo
 
 ---
+```text
 ARBOL
 WEB AULA VIRTUAL
 │
@@ -264,7 +265,7 @@ WEB AULA VIRTUAL
     └── 🛍️ Dashboard Cliente (Área Personal)
         ├── Historial de Contrataciones
         └── Estado de pedidos
-
+```
 ---
 
 ## 🎮 Experiencia de Usuario (UX) y Funcionamiento de la Plataforma
