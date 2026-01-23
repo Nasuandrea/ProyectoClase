@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .avatar-container{
+        width: 300px;
+        height: 200px;
+        margin-bottom: 20px;
+        display: block;
+    }
+    .con {
+        display: none;
+        gap: 10px;
+    }
+   
+    .container {
+        width: 300px;
+        height: 200px;
+        cursor: pointer;
+    }
+   
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .contenedor1 {
+        display: flex;
+        margin: 40px auto;
+        width: 50%;
+        background: red;
+        height: 300px;
+        scale: 0;
+        animation-name: con1;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes con1 {
+        0% {
+            scale: 0;
+        }
+        100% {
+            scale: 1;
+        }
+    }
+</style>
+<body>
+   <div class="avatar-container">
+    <button id="boton">
+        <img class="img" src="anatomy-254129_640.jpg" alt="Imagen">
+    </button>
+    <!-- <a href="#" onclick="mostrar()"> -->
+        
+    </a>
+   </div>
+
+   <div class="con">
+    <button id="botonCerrar">X</button>
+     <div class="contenedor1"></div>
+     <div class="contenedor1"></div>
+     <div class="contenedor1"></div>
+   </div>
+
+<script>
+    const boton = document.getElementById("boton");
+
+    boton.addEventListener("click", ()=>{
+        evento1(),
+        evento2();
+    });
+
+    function evento1(){
+        const mostrar = document.querySelector(".con");
+        if (mostrar.style.display === "flex"){
+            mostrar.style.display = "none";
+        } else {
+            mostrar.style.display = "flex";
+        }
+    }
+
+    function evento2(){
+        const avatar = document.querySelector(".avatar-container");
+        if (avatar.style.display === "none"){
+            avatar.style.display = "block";
+        } else {
+            avatar.style.display = "none";
+        }
+
+    }
+
+ const botonCerrar = document.querySelector("#botonCerrar");
+ botonCerrar.addEventListener("click", ()=>{
+    cerrarModal();
+ });
+   
+    function cerrarModal(){
+        const cerrar = document.querySelector(".con");
+        const abrir = document.querySelector(".avatar-container");
+
+        if (cerrar.style.display ==="flex"){
+            cerrar.style.display = "none";
+            abrir.style.display = "block";
+            console.log("funciona");
+        } else {
+            
+            cerrar.style.display === "flex";{
+                abrir.style.display = "none";
+                console.log("no funciona");
+            }
+        }
+    }
+        
+
+
+
+
+
+    // function mostrar() {
+    //     const con = document.querySelector('.con');
+       
+    //     if (con.style.display === 'flex') {
+    //         con.style.display = 'none'; 
+    //     } else {
+    //         con.style.display = 'flex';
+           
+           
+    //         const contenedores = document.querySelectorAll('.contenedor1');
+    //         contenedores.forEach((elemento, index) => {
+    //             elemento.style.animationDelay = `${(index + 1) * 0.3}s`;
+               
+    //             elemento.style.animation = 'none';
+    //             setTimeout(() => {
+    //                 elemento.style.animation = `con1 1s forwards ${(index + 1) * 0.3}s`;
+    //             }, 10);
+    //         });
+    //     }
+    // }
+    //   function toggleImagen() {
+    //     const img = document.querySelector('.img');
+    //     if (img.style.display === 'block') {
+    //         img.style.display = 'none';
+    //     } else {
+    //         img.style.display = 'block';
+    //     }
+    // }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const contenedores = document.querySelectorAll('.contenedor1');
+        contenedores.forEach((elemento, index) => {
+            elemento.style.animationDelay = `${(index + 1) * 0.3}s`;
+        });
+    });
+</script>
+</body>
+</html>
