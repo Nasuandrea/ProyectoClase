@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUTONOMIX | Profesionales</title>
@@ -11,18 +10,64 @@
 </head>
 
 <body>
+
     <header class="main-header">
         <div class="logo-section">
-            <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;"> 
-                <span class="logo">🐱</span>
+            <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+                <span class="cat-logo">🐱</span>
                 <span class="brand-name">AUTONOMIX</span>
             </a>
         </div>
         <div class="search-container">
-            <input id="search" type="text" class="pill-search" placeholder="BUSCAR TALENTO...">
+            <input type="text" class="pill-search" placeholder="BUSCAR TALENTO...">
             <button class="search-btn">🔍</button>
         </div>
         <div class="auth-section">
-            <span class="user-login">LOGIN / REGISTRO</span>
+            <span class="user-pill">LOGIN / REGISTRO</span>
         </div>
     </header>
+
+    <main>
+        
+    </main>
+
+    <footer>
+        
+    </footer>
+
+</body>
+
+</html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    --amarillo: #FFEB3B;
+    --azul: #2979FF;
+    --borde: 4px solid #000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; image-rendering: pixelated; }
+
+body {
+    background-color: #fff;
+    font-family: 'VT323', monospace;
+    text-transform: uppercase;
+}
+
+/* HEADER */
+.main-header {
+    background: var(--amarillo);
+    border-bottom: var(--borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+}
+.brand-name { font-size: 2rem; font-weight: bold; }
+.pill-search { border: 3px solid #000; padding: 8px; font-family: inherit; font-size: 1.2rem; }
+
+
+</style>
+
