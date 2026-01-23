@@ -1,4 +1,4 @@
-// ============================
+/// ============================
 // VARIABLES GLOBALES
 // ============================
 let todosLosUsuarios = [];
@@ -7,8 +7,10 @@ let todosLosUsuarios = [];
 // CARGA DE USUARIOS (CATÁLOGO)
 // ============================
 async function cargarUsuarios() {
-    const loading = document.getElementById('loading');
     const container = document.getElementById('cards-container');
+    if (!container) return; // No hay catálogo en la página
+
+    const loading = document.getElementById('loading');
     const errorDiv = document.getElementById('error');
 
     try {
@@ -16,7 +18,7 @@ async function cargarUsuarios() {
         if (!response.ok) throw new Error('Error en la respuesta del servidor');
 
         const resultado = await response.json();
-        loading.style.display = 'none';
+        if (loading) loading.style.display = 'none';
 
         if (resultado.success) {
             todosLosUsuarios = resultado.data;
@@ -30,9 +32,11 @@ async function cargarUsuarios() {
         }
 
     } catch (error) {
-        loading.style.display = 'none';
-        errorDiv.style.display = 'block';
-        errorDiv.textContent = 'Error al cargar los usuarios: ' + error.message;
+        if (loading) loading.style.display = 'none';
+        if (errorDiv) {
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = 'Error al cargar los usuarios: ' + error.message;
+        }
         console.error('Error:', error);
     }
 }
@@ -42,16 +46,17 @@ async function cargarUsuarios() {
 // ============================
 function generarCards(usuarios) {
     const container = document.getElementById('cards-container');
-    const noResults = document.getElementById('no-results');
+    if (!container) return;
 
+    const noResults = document.getElementById('no-results');
     container.innerHTML = '';
 
     if (usuarios.length === 0) {
-        noResults.style.display = 'block';
+        if (noResults) noResults.style.display = 'block';
         return;
     }
 
-    noResults.style.display = 'none';
+    if (noResults) noResults.style.display = 'none';
 
     usuarios.forEach(usuario => {
         const card = crearCard(usuario);
@@ -136,10 +141,15 @@ function contactar(email) {
 // FILTROS
 // ============================
 function filtrarUsuarios() {
-    const searchTerm = document.getElementById('search').value.toLowerCase();
-    const modalidadFilter = document.getElementById('filter-modalidad').value;
+    const searchTermInput = document.getElementById('search');
+    const modalidadSelect = document.getElementById('filter-modalidad');
 
-    let usuariosFiltrados = todosLosUsuarios.filter(usuario => {
+    if (!searchTermInput || !modalidadSelect) return;
+
+    const searchTerm = searchTermInput.value.toLowerCase();
+    const modalidadFilter = modalidadSelect.value;
+
+    const usuariosFiltrados = todosLosUsuarios.filter(usuario => {
         const matchSearch =
             searchTerm === '' ||
             usuario.nombre.toLowerCase().includes(searchTerm) ||
@@ -147,8 +157,7 @@ function filtrarUsuarios() {
             usuario.descripcion.toLowerCase().includes(searchTerm);
 
         const matchModalidad =
-            modalidadFilter === '' ||
-            usuario.modalidad === modalidadFilter;
+            modalidadFilter === '' || usuario.modalidad === modalidadFilter;
 
         return matchSearch && matchModalidad;
     });
@@ -157,36 +166,28 @@ function filtrarUsuarios() {
 }
 
 function mostrarMensaje(elementId) {
-    document.getElementById(elementId).style.display = 'block';
+    const el = document.getElementById(elementId);
+    if (el) el.style.display = 'block';
 }
 
 // ============================
 // CARGA DE SKILLS Y CATEGORÍAS PARA EL FORMULARIO
 // ============================
 async function cargarSkillsYCategorias() {
+    const skillsDiv = document.getElementById("skills-list");
+    const catsDiv = document.getElementById("categories-list");
+    if (!skillsDiv || !catsDiv) return;
+
     try {
-        // Fetch skills
         const skillsRes = await fetch("obtener_skills.php");
         const skills = await skillsRes.json();
-        console.log("Skills:", skills);
 
-        // Fetch categories
         const catsRes = await fetch("obtener_categorias.php");
         const cats = await catsRes.json();
-        console.log("Categorías:", cats);
-
-        const skillsDiv = document.getElementById("skills-list");
-        const catsDiv = document.getElementById("categories-list");
-
-        if (!skillsDiv || !catsDiv) {
-            console.error("No existen los contenedores skills-list o categories-list en el HTML");
-            return;
-        }
 
         skillsDiv.innerHTML = "";
         catsDiv.innerHTML = "";
 
-        // Pintar skills
         skills.forEach(s => {
             skillsDiv.innerHTML += `
                 <label>
@@ -196,7 +197,6 @@ async function cargarSkillsYCategorias() {
             `;
         });
 
-        // Pintar categorías
         cats.forEach(c => {
             catsDiv.innerHTML += `
                 <label>
@@ -214,33 +214,22 @@ async function cargarSkillsYCategorias() {
 // ============================
 // ENVÍO DEL FORMULARIO DE REGISTRO
 // ============================
-document.addEventListener("DOMContentLoaded", () => {
-    // Cargar datos
-    cargarUsuarios();
-    cargarSkillsYCategorias();
+function inicializarFormulario() {
+    const form = document.getElementById("registroForm");
+    if (!form) return;
 
-    // Filtros del catálogo
-    document.getElementById('search').addEventListener('input', filtrarUsuarios);
-    document.getElementById('filter-modalidad').addEventListener('change', filtrarUsuarios);
-
-    // Registro nuevo usuario
-    document.getElementById("registroForm").addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const form = e.target;
         const formData = new FormData(form);
 
-        // Recoger skills seleccionadas
-        const selectedSkills = [...document.querySelectorAll("input[name='skills[]']:checked")]
-            .map(el => el.value);
-
-        // Recoger categorías seleccionadas
-        const selectedCats = [...document.querySelectorAll("input[name='categorias[]']:checked")]
-            .map(el => el.value);
+        // Recoger skills y categorías seleccionadas
+        const selectedSkills = [...document.querySelectorAll("input[name='skills[]']:checked")].map(el => el.value);
+        const selectedCats = [...document.querySelectorAll("input[name='categorias[]']:checked")].map(el => el.value);
 
         // Añadir nuevas si se escribieron
-        const newSkill = document.getElementById("new-skill").value.trim();
-        const newCat = document.getElementById("new-category").value.trim();
+        const newSkill = document.getElementById("new-skill")?.value.trim();
+        const newCat = document.getElementById("new-category")?.value.trim();
 
         if (newSkill) selectedSkills.push(newSkill);
         if (newCat) selectedCats.push(newCat);
@@ -248,28 +237,37 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("skills", selectedSkills.join(","));
         formData.append("categorias", selectedCats.join(","));
 
-        // Enviar al PHP
         try {
             const response = await fetch("registrar_usuario.php", {
                 method: "POST",
                 body: formData
             });
-
             const data = await response.json();
             const mensaje = document.getElementById("registroMensaje");
 
             if (data.success) {
                 mensaje.innerHTML = "✅ Usuario registrado correctamente";
                 form.reset();
-                cargarUsuarios();          // Refrescar catálogo
-                cargarSkillsYCategorias(); // Recargar listas por si hay nuevas
+                cargarSkillsYCategorias(); // recargar listas
             } else {
                 mensaje.innerHTML = "❌ Error: " + data.error;
             }
-
         } catch (error) {
             console.error(error);
             document.getElementById("registroMensaje").innerHTML = "❌ Error al enviar formulario";
         }
     });
+}
+
+// ============================
+// INICIALIZACIÓN AL CARGAR LA PÁGINA
+// ============================
+document.addEventListener("DOMContentLoaded", () => {
+    cargarUsuarios();
+    cargarSkillsYCategorias();
+    inicializarFormulario();
+
+    // Filtros del catálogo
+    document.getElementById('search')?.addEventListener('input', filtrarUsuarios);
+    document.getElementById('filter-modalidad')?.addEventListener('change', filtrarUsuarios);
 });

@@ -47,60 +47,6 @@
             <p>No se encontraron desarrolladores</p>
         </div>
 
-        <section class="container">
-            <h2 style="margin-bottom:1rem;">Registrar nuevo autónomo</h2>
-
-            <div class="card registro-card">
-                <div class="card-header">
-                    <div class="card-avatar">+</div>
-                    <div class="card-header-info">
-                        <h2>Nuevo perfil</h2>
-                        <div class="card-location">Crea un nuevo autónomo en el catálogo</div>
-                    </div>
-                </div>
-
-                <form id="registroForm" class="card-body registro-form">
-                    <div class="form-row">
-                        <input type="text" name="nombre" placeholder="Nombre completo" required>
-                        <input type="email" name="email" placeholder="Email" required>
-                    </div>
-
-                    <div class="form-row">
-                        <input type="text" name="ciudad" placeholder="Ciudad">
-                        <input type="text" name="provincia" placeholder="Provincia">
-                    </div>
-
-                    <div class="form-row">
-                        <select name="modalidad">
-                            <option value="online">Online</option>
-                            <option value="presencial">Presencial</option>
-                            <option value="mixto">Mixto</option>
-                        </select>
-                        <input type="text" name="enlaces" placeholder="Portfolio / links a trabajos">
-                    </div>
-
-                    <textarea name="descripcion" placeholder="Descripción profesional"></textarea>
-
-                    <div class="card-section">
-                        <div class="card-section-title">Skills</div>
-                        <div id="skills-list" class="checkbox-grid"></div>
-                        <input type="text" id="new-skill" placeholder="Añadir nueva skill">
-                    </div>
-
-                    <div class="card-section">
-                        <div class="card-section-title">Categorías</div>
-                        <div id="categories-list" class="checkbox-grid"></div>
-                        <input type="text" id="new-category" placeholder="Añadir nueva categoría">
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Registrar autónomo</button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="registroMensaje"></div>
-        </section>
-
     </main>
 
     <script src="script.js"></script>
