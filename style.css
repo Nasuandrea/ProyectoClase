@@ -1,0 +1,27 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* image-rendering: pixelated; */
+}
+
+body{
+    margin-top: 0;
+}
+header{
+    grid: flex;
+    flex-direction: row; 
+}
+
+/** Medidas dispositivos: movil, tablet, pantalla **/
+@media(max-width:576px){
+ 
+}
+
+@media(min-width:768px){
+ 
+}
+
+@media(min-width:1200px){
+ 
+}
