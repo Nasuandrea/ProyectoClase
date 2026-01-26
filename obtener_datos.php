@@ -1,5 +1,7 @@
 <?php
-// Headers para JSON
+/**
+ * @var mixed
+ */
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *'); // Solo para desarrollo
 
@@ -10,7 +12,7 @@ require_once 'conexion.php';
 $sql = "SELECT * FROM tu_tabla";
 $resultado = $conn->query($sql);
 
-$datos = array();
+$datos = array(); 
 
 if ($resultado) {
     if ($resultado->num_rows > 0) {

@@ -1,15 +1,18 @@
 <?php
+/*
 $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "autonomix";
 $port = 3306;
+*/
 
-/**Host: sql7.freesqldatabase.com
-Database name: sql7815048
-Database user: sql7815048
-Database password: F7k37eg2fG
-Port number: 3306*/
+$host = "sql7.freesqldatabase.com";
+$user = "sql7815048";
+$pass = "F7k37eg2fG";
+$db   = "sql7815048";
+$port = 3306;
+
 
 $conn = new mysqli($host, $user, $pass, $db, $port);
 
