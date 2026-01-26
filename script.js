@@ -82,7 +82,7 @@ function crearCard(usuario) {
 
     card.innerHTML = `
         <div class="card-header">
-            <div class="card-avatar">${iniciales}</div>
+            <div class="card-avatar"><img src= "${usuario.avatar2D}" alt="${iniciales}"></div>
             <div class="card-header-info">
                 <h2>${usuario.nombre}</h2>
                 <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}</div>
@@ -169,6 +169,39 @@ function mostrarMensaje(elementId) {
     const el = document.getElementById(elementId);
     if (el) el.style.display = 'block';
 }
+
+// Cargar Avatar 2D
+function inicializarAvatarUpload() {
+    const avatarPreview = document.getElementById("avatarPreview");
+    const avatarInput = document.getElementById("avatarInput");
+    const avatarPlus = document.getElementById("avatarPlus");
+
+    if (!avatarPreview || !avatarInput) return;
+
+    // Al hacer click en el círculo, abrir selector
+    avatarPreview.addEventListener("click", () => {
+        avatarInput.click();
+    });
+
+    // Cuando se selecciona una imagen
+    avatarInput.addEventListener("change", () => {
+        const file = avatarInput.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("Por favor selecciona una imagen válida");
+            avatarInput.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            avatarPreview.innerHTML = `<img src="${reader.result}" alt="Avatar">`;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
 
 // ============================
 // CARGA DE SKILLS Y CATEGORÍAS PARA EL FORMULARIO
@@ -266,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarUsuarios();
     cargarSkillsYCategorias();
     inicializarFormulario();
+    inicializarAvatarUpload();
 
     // Filtros del catálogo
     document.getElementById('search')?.addEventListener('input', filtrarUsuarios);

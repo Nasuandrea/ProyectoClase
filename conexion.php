@@ -1,8 +1,8 @@
 <?php
-$host = "sql7.freesqldatabase.com";
-$user = "sql7815048";
-$pass = "F7k37eg2fG";
-$db   = "sql7815048";
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "autonomix";
 $port = 3306;
 
 /**Host: sql7.freesqldatabase.com

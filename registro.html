@@ -18,16 +18,24 @@
     <section class="container">
         <h2 style="margin-bottom:1rem;">Registrar nuevo autónomo</h2>
 
-        <div class="card registro-card">
-            <div class="card-header">
-                <div class="card-avatar">+</div>
-                <div class="card-header-info">
-                    <h2>Nuevo perfil</h2>
-                    <div class="card-location">Crea un nuevo autónomo en el catálogo</div>
-                </div>
-            </div>
 
-            <form id="registroForm" class="card-body registro-form">
+        <form id="registroForm" class="card-body registro-form" method="POST" action="registrar_usuario.php"
+            enctype="multipart/form-data">
+
+            <div class="card registro-card">
+                <div class="card-header">
+                    <div class="avatar-upload">
+                        <div id="avatarPreview" class="avatar-preview">
+                            <span id="avatarPlus">+</span>
+                        </div>
+                        <input type="file" id="avatarInput" name="avatar2D" accept="image/*" hidden>
+                    </div>
+                    <div class="card-header-info">
+                        <h2>Nuevo perfil</h2>
+                        <div class="card-location">Crea un nuevo autónomo en el catálogo</div>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <input type="text" name="nombre" placeholder="Nombre completo" required>
                     <input type="email" name="email" placeholder="Email" required>
@@ -63,7 +71,7 @@
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar autónomo</button>
                 </div>
-            </form>
+        </form>
         </div>
 
         <div id="registroMensaje"></div>
