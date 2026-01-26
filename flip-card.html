@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<!-- los estilos no se conservan a excepcion de los que indique con un comentario -->
 <style>
     .flip-card {
         background-color: transparent;
@@ -20,6 +21,7 @@
         height: 100%;
         text-align: center;
         transition: transform 0.8s;
+        /* transform-style es necesario para hacer el efecto */
         transform-style: preserve-3d;
     }
 
@@ -31,6 +33,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        /* backface se necesita para que no se vea el segundo div que tiene la parte trasera del card */
         backface-visibility: hidden;
         border: 1px solid #ccc;
         border-radius: 10px;
@@ -49,9 +52,11 @@
     .flip-card-back {
         background-color: #2980b9;
         color: white;
+        /* transform mantener para que se vea correctamente */
         transform: rotateY(180deg);
         
     }
+    /* esta clase es la que se añade desde js al hacer click y genera el flip */
     .flipped {
         transform: rotateY(180deg);
     }
@@ -79,16 +84,20 @@
 </style>
 <body>
     <div>
+        <!-- contenedor principal -->
         <div class="flip-card">
+            <!-- contiene las dos caras del div -->
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <h2>Front Side</h2>
                     <p>This is the front side of the card.</p>
                     <button id="flipFormulario" onclick="flip()">contactar</button>
                 </div>
+                <!-- esta oculto por defecto -->
                 <div class="flip-card-back">
                     <h2>Back Side</h2>
                     <p>This is the back side of the card.</p>
+                    <!-- mantener solo la clase button y el onclick con lo que cotenga -->
                     <button class="botonVolver" onclick="flipBack()">🔙</button>
                 </div>
             </div>

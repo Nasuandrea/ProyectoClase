@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <style>
+    /* no son necesarios */
     .boton-categoria{
         width: 200px;
         height: 100px;
@@ -33,6 +34,7 @@
     *decodificarlo de json a js
     *crear tantas categorias como elementos tenga el array que llega
     -->
+    <!-- genera botones de forma dinamica -->
 <div id="contenedorBotonCategorias" class="contenedor-boton-categorias" onchange="filtrarCategorias()">
 </div>
 
@@ -90,6 +92,7 @@ async function cargarUsuarios() {
         }
         
     } catch (error) {
+        // estos estilos se generan dinamicamente y se tienen que mantener como esta aca
         loading.style.display = 'none';
         errorDiv.style.display = 'block';
         errorDiv.textContent = 'Error al cargar los usuarios: ' + error.message;
@@ -115,6 +118,7 @@ fetch(obtenerCategorias)
 // const contenedorBoton = document.getElementById('contenedorBoton');
 
 //function generar cards automaticas
+
 //falta recoger el id desde el backend
 function generarCards(usuarios){
     let contenedorCard = document.querySelector('.contenedor-card');
@@ -123,6 +127,8 @@ function generarCards(usuarios){
     usuarios.forEach((usuario)=> {
         let card = document.createElement('div');
         card.classList.add('card');
+        // contenedor de lo que tiene dentro la card
+        // faltaria incluile las clases de css que necesiten
         card.innerHTML = `
         <h3>${usuario.nombre}</h3>
         <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
@@ -132,6 +138,8 @@ function generarCards(usuarios){
 }
 
 //funcion de categorias y filtro por categorias
+
+//añado contenido dinamico que variaria segun la estructura del boton
 
 function generarCategorias(categorias){
     let contenerdorBoton = document.querySelector('.contenedor-boton-categorias');
