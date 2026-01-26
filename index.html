@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Avatar 3D</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Layout Principal */
+        #app-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Botón Volver */
+        #back-btn {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        #back-btn:hover {
+            background: #555;
+        }
+
+        /* Initial Gallery Layout */
+        #initial-gallery {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        /* Featured Layout */
+        #featured-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+        }
+
+        /* Sección Superior: Featured + Info */
+        #top-section {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            height: 500px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #featured-spot {
+            width: 350px;
+            height: 500px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #info-panel {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #info-panel h1 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 2.5rem;
+        }
+
+        #info-panel h2 {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-weight: normal;
+            font-size: 1.2rem;
+        }
+
+        #info-panel p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Sección Inferior: Galería (en modo Featured) */
+        #bottom-gallery {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        /* Estilos de los Viewers */
+        .viewer {
+            width: 350px;
+            height: 500px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .viewer:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        /* En Featured Spot, quitamos interactividad de hover */
+        #featured-spot .viewer {
+            cursor: default;
+            transform: none !important;
+        }
+
+        #featured-spot .viewer:hover {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app-container">
+        <!-- Volver -->
+        <button id="back-btn" class="hidden">← Volver</button>
+
+        <!-- MODO 1: Galería Inicial -->
+        <div id="initial-gallery">
+            <div id="viewer1" class="viewer"></div>
+            <div id="viewer2" class="viewer"></div>
+            <div id="viewer3" class="viewer"></div>
+        </div>
+
+        <!-- MODO 2: Detalle (Oculto inicialmente) -->
+        <div id="featured-layout" class="hidden">
+            <!-- Parte Superior -->
+            <div id="top-section">
+                <!-- Izquierda: Avatar Destacado -->
+                <div id="featured-spot"></div>
+
+                <!-- Derecha: Información -->
+                <div id="info-panel">
+                    <h1 id="info-name">Nombre</h1>
+                    <h2 id="info-role">Rol</h2>
+                    <p id="info-desc">Descripción...</p>
+                </div>
+            </div>
+
+            <!-- Parte Inferior: Resto de Galería -->
+            <div id="bottom-gallery"></div>
+        </div>
+    </div>
+
+    <!-- Import map para Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Script principal embebido -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ==========================================
+        // DATOS
+        // ==========================================
+        const avatarData = {
+            'viewer1': {
+                name: 'Ismail Kerfah',
+                role: 'Desarrollador UI',
+                desc: 'Experto en tecnologías web modernas.'
+            },
+            'viewer2': {
+                name: 'Imrán Hussain',
+                role: 'Diseñadora UX/UI',
+                desc: 'Experto en diseño de interfaces atractivas y funcionales.'
+            },
+            'viewer3': {
+                name: 'Jorge Jiménez',
+                role: 'Artista 3D',
+                desc: 'Maestro del modelado y la animación. Da vida a los personajes virtuales.'
+            }
+        };
+
+        // ==========================================
+        // UI & STATE
+        // ==========================================
+        const backBtn = document.getElementById('back-btn');
+        const initialGallery = document.getElementById('initial-gallery');
+        const featuredLayout = document.getElementById('featured-layout');
+        const featuredSpot = document.getElementById('featured-spot');
+        const bottomGallery = document.getElementById('bottom-gallery');
+
+        const infoName = document.getElementById('info-name');
+        const infoRole = document.getElementById('info-role');
+        const infoDesc = document.getElementById('info-desc');
+
+        let isFeaturedMode = false;
+        let currentFeaturedId = null;
+
+        // Función 1: Activar modo Featured con un ID específico
+        function activateFeatured(id) {
+            isFeaturedMode = true;
+            currentFeaturedId = id;
+
+            // Mostrar/Ocultar contenedores
+            initialGallery.classList.add('hidden');
+            featuredLayout.classList.remove('hidden');
+            backBtn.classList.remove('hidden');
+
+            updateFeaturedLayout();
+        }
+
+        // Función 2: Restaurar galería inicial
+        function restoreGallery() {
+            isFeaturedMode = false;
+            currentFeaturedId = null;
+
+            // Mostrar/Ocultar contenedores
+            initialGallery.classList.remove('hidden');
+            featuredLayout.classList.add('hidden');
+            backBtn.classList.add('hidden');
+
+            // Devolver todos los viewers al initialGallery, en orden correcto (1,2,3)
+            const ids = ['viewer1', 'viewer2', 'viewer3'];
+            ids.forEach(vid => {
+                const el = document.getElementById(vid);
+                if (el) initialGallery.appendChild(el);
+            });
+
+            // Resize para arreglar cualquier glitch visual al cambiar de padre
+            requestAnimationFrame(resizeAllViewers);
+        }
+
+        // Función Helper: Organizar layout interno del modo Featured
+        function updateFeaturedLayout() {
+            // 1. Mover el destacado arriba
+            const featuredEl = document.getElementById(currentFeaturedId);
+            if (featuredEl) featuredSpot.appendChild(featuredEl);
+
+            // 2. Mover el resto abajo
+            Object.keys(avatarData).forEach(vid => {
+                if (vid !== currentFeaturedId) {
+                    const el = document.getElementById(vid);
+                    if (el) bottomGallery.appendChild(el);
+                }
+            });
+
+            // 3. Actualizar Info
+            const data = avatarData[currentFeaturedId];
+            if (data) {
+                infoName.textContent = data.name;
+                infoRole.textContent = data.role;
+                infoDesc.textContent = data.desc;
+            }
+
+            // 4. Resize
+            requestAnimationFrame(resizeAllViewers);
+        }
+
+        function resizeAllViewers() {
+            viewers.forEach(v => v.resize());
+        }
+
+        // Listeners
+        function setupInteractions() {
+            backBtn.addEventListener('click', restoreGallery);
+
+            const allViewers = document.querySelectorAll('.viewer');
+            allViewers.forEach(v => {
+                v.addEventListener('click', () => {
+                    const clickedId = v.id;
+
+                    if (!isFeaturedMode) {
+                        // Si estamos en galería inicial, activar modo featured
+                        activateFeatured(clickedId);
+                    } else {
+                        // Si ya estamos en modo featured...
+                        if (clickedId === currentFeaturedId) return; // Click en el featured no hace nanda
+
+                        // Click en uno de abajo -> Swap
+                        currentFeaturedId = clickedId;
+                        updateFeaturedLayout();
+                    }
+                });
+            });
+        }
+
+
+        // ==========================================
+        // THREE.JS VIEWER CLIENT
+        // ==========================================
+        const config = {
+            backgroundColor: 0xf0f0f0,
+            ambientIntensity: 0.5,
+            cameraFOV: 45,
+            cameraPosition: new THREE.Vector3(0, 1.4, 2.5),
+        };
+
+        class AvatarViewer {
+            constructor(containerId, modelPath) {
+                this.container = document.getElementById(containerId);
+                this.modelPath = modelPath;
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.controls = null;
+                this.model = null;
+
+                // Bind animate for this instance
+                this.animate = this.animate.bind(this);
+
+                this.init();
+            }
+
+            init() {
+                if (!this.container) {
+                    console.error('Container not found:', this.containerId);
+                    return;
+                }
+
+                // 1. ESCENA
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(config.backgroundColor);
+                this.scene.fog = new THREE.Fog(config.backgroundColor, 10, 50);
+
+                // 2. RENDERER
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+                this.container.appendChild(this.renderer.domElement);
+
+                // 3. CÁMARA
+                const aspect = this.container.clientWidth / this.container.clientHeight;
+                this.camera = new THREE.PerspectiveCamera(config.cameraFOV, aspect, 0.1, 100);
+                this.camera.position.copy(config.cameraPosition);
+
+                // 4. CONTROLES
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+                this.controls.dampingFactor = 0.05;
+                this.controls.minDistance = 1.5;
+                this.controls.maxDistance = 4.5;
+                this.controls.maxPolarAngle = Math.PI / 2 - 0.05;
+                this.controls.target.set(0, 1.2, 0);
+
+                // 5. SETUP
+                this.setupLights();
+                this.setupEnvironment();
+                this.loadModel();
+            }
+
+            setupLights() {
+                const ambientLight = new THREE.AmbientLight(0xffffff, config.ambientIntensity);
+                this.scene.add(ambientLight);
+
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
+                mainLight.position.set(2, 5, 5);
+                mainLight.castShadow = true;
+                mainLight.shadow.mapSize.width = 1024;
+                mainLight.shadow.mapSize.height = 1024;
+                this.scene.add(mainLight);
+
+                const rimLight = new THREE.SpotLight(0xffffff, 2.0);
+                rimLight.position.set(-2, 4, -4);
+                rimLight.lookAt(0, 1, 0);
+                this.scene.add(rimLight);
+
+                const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                fillLight.position.set(-5, 0, 2);
+                this.scene.add(fillLight);
+            }
+
+            setupEnvironment() {
+                // Suelo
+                const geometry = new THREE.PlaneGeometry(100, 100);
+                const material = new THREE.MeshStandardMaterial({
+                    color: config.backgroundColor,
+                    depthWrite: false,
+                    roughness: 1,
+                    metalness: 0
+                });
+                const floor = new THREE.Mesh(geometry, material);
+                floor.rotation.x = -Math.PI / 2;
+                floor.receiveShadow = true;
+                this.scene.add(floor);
+
+                // Plataforma
+                const platformGeo = new THREE.CircleGeometry(1, 65);
+                const platformMat = new THREE.MeshStandardMaterial({
+                    color: 0xFF4500,
+                    roughness: 0.9,
+                    metalness: 0.0
+                });
+                const platform = new THREE.Mesh(platformGeo, platformMat);
+                platform.rotation.x = -Math.PI / 2;
+                platform.position.y = 0;
+                platform.receiveShadow = true;
+                platform.name = 'platform';
+                this.scene.add(platform);
+            }
+
+            loadModel() {
+                const loader = new GLTFLoader();
+                loader.load(this.modelPath, (gltf) => {
+                    this.model = gltf.scene;
+
+                    this.model.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = false;
+                        }
+                    });
+
+                    const box = new THREE.Box3().setFromObject(this.model);
+                    const size = box.getSize(new THREE.Vector3());
+                    const center = box.getCenter(new THREE.Vector3());
+
+                    // Centrar modelo LOCALMENTE
+                    this.model.position.x -= center.x;
+                    this.model.position.z -= center.z;
+
+                    const floatHeight = 0.12;
+                    this.model.position.y -= box.min.y - floatHeight;
+
+                    this.scene.add(this.model);
+
+                    // Ajustar plataforma local
+                    const platform = this.scene.getObjectByName('platform');
+                    if (platform) {
+                        const radius = Math.max(size.x, size.z) * 0.6;
+                        const finalRadius = Math.max(radius, 0.6);
+                        platform.scale.set(finalRadius, finalRadius, finalRadius);
+                    }
+
+                    // Ajustar target cámara local
+                    const newTargetY = size.y * 0.6 + size.x * 0.40;
+                    this.controls.target.set(0, newTargetY, 0);
+                    this.controls.update();
+
+                    console.log(`Loaded ${this.modelPath}`);
+
+                }, undefined, (error) => {
+                    console.error('Error loading ' + this.modelPath, error);
+                });
+            }
+
+            resize() {
+                if (!this.container || !this.camera || !this.renderer) return;
+                const width = this.container.clientWidth;
+                const height = this.container.clientHeight;
+                this.renderer.setSize(width, height);
+                this.camera.aspect = width / height;
+                this.camera.updateProjectionMatrix();
+            }
+
+            animate() {
+                if (this.controls) this.controls.update();
+                if (this.renderer && this.scene && this.camera) {
+                    this.renderer.render(this.scene, this.camera);
+                }
+            }
+        }
+
+        // Crear instancias
+        const viewers = [
+            new AvatarViewer('viewer1', 'avatar1.glb'),
+            new AvatarViewer('viewer2', 'avatar2.glb'),
+            new AvatarViewer('viewer3', 'avatar3.glb')
+        ];
+
+        function animateAll() {
+            requestAnimationFrame(animateAll);
+            viewers.forEach(v => v.animate());
+        }
+
+        // Handle resize globally
+        window.addEventListener('resize', () => {
+            viewers.forEach(v => v.resize());
+        });
+
+        // Initialize App
+        animateAll();
+        setupInteractions();
+    </script>
+</body>
+
+</html>
