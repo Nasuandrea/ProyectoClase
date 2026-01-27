@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.pill-search {
+    border: var(--borde) var(--color-tarjeta-titulo);
+    padding: 8px;
+    font-family: inherit;
+    font-size: 20px;
+    background-color: rgb(105, 105, 244);
+}
+
+.search-btn {
+border: var(--borde) var(--color-tarjeta-titulo);
+font-size: 24px;
+cursor: pointer;
+background-color: blue;
+
+}
+</style>
+<body>
+    <div class="search-container">
+            <input type="text" class="pill-search" id="searchInput" 
+             placeholder="BUSCAR TALENTO...">
+            <button class="search-btn">
+                <img src="/search.png" alt="searchIcon">
+            </button>
+    </div>
+<script>
+    src="barra-busqueda.js"
+</script>
+</body>
+</html>

@@ -3,7 +3,9 @@ function(e){
     // funcion añade evento de escucha al input, lo pasa a minuscula, busca dentro de los filtros
 
     const searchTerm = e.target.value.toLowerCase();
-    const allFilters = [...skills, ...catergorias,...localidad,...modalidad,...provicia,...nombre];
+    const allFilters = [
+        ...skills, ...catergorias,...localidad,...modalidad,...provicia,...nombre,...ciudad
+    ];
     const filtered = allFilters.filter(
         skill =>
             skill.id.toLowerCase().includes(searchTerm)
