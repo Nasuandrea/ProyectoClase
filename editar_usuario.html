@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar autónomo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>✏️ Autonomix - Editar autónomo</h1>
+        <p class="subtitle">Modifica el perfil de un autónomo</p>
+    </div>
+</header>
+
+<section class="container">
+    <form id="editarForm" class="card-body registro-form" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" id="userId">
+
+        <div class="card registro-card">
+            <div class="card-header">
+                <div class="avatar-upload">
+                    <div id="avatarPreview" class="avatar-preview">
+                        <span id="avatarPlus">+</span>
+                    </div>
+                    <input type="file" id="avatarInput" name="avatar2D" accept="image/*" hidden>
+                </div>
+
+                <div class="card-header-info">
+                    <h2>Editar perfil</h2>
+                    <div class="card-location">Modifica los datos del autónomo</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre completo">
+                <input type="email" name="email" id="email" placeholder="Email">
+            </div>
+
+            <div class="form-row">
+                <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad">
+                <input type="text" name="provincia" id="provincia" placeholder="Provincia">
+            </div>
+
+            <div class="form-row">
+                <select name="modalidad" id="modalidad">
+                    <option value="online">Online</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="mixto">Mixto</option>
+                </select>
+                <input type="text" name="enlaces" id="enlaces" placeholder="Portfolio / links">
+            </div>
+
+            <textarea name="descripcion" id="descripcion" placeholder="Descripción profesional"></textarea>
+            <input type="text" name="especializacion" id="especializacion" placeholder="Especialización">
+
+            <!-- Backend -->
+            <div class="card-section">
+                <div class="card-section-title">Nivel Backend</div>
+                <div class="level-bars" id="backend-bars"></div>
+                <input type="hidden" name="backend" id="backend">
+            </div>
+
+            <!-- Frontend -->
+            <div class="card-section">
+                <div class="card-section-title">Nivel Frontend</div>
+                <div class="level-bars" id="frontend-bars"></div>
+                <input type="hidden" name="frontend" id="frontend">
+            </div>
+
+            <!-- Skills -->
+            <div class="card-section">
+                <div class="skill-input-container">
+        <input type="text" id="nueva-skill" placeholder="Ej: React, Figma...">
+        <button type="button" onclick="agregarSkill()">Añadir</button>
+    </div>
+    <div id="skills-list" class="checkbox-grid"></div>
+            </div>
+
+            <!-- Categorías -->
+            <div class="card-section">
+                <div class="card-section-title">Categorías</div>
+                <div id="categories-list" class="checkbox-grid"></div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div id="editarMensaje"></div>
+</section>
+
+<script src="editar_usuario.js"></script>
+</body>
+</html>

@@ -15,7 +15,11 @@ $sql = "SELECT
     u.ciudad,
     u.provincia,
     u.modalidad,
+    u.backend,
+    u.frontend,
     u.avatar2D,
+    u.avatar3D,
+    u.especializacion,
     GROUP_CONCAT(DISTINCT s.nombre ORDER BY s.nombre SEPARATOR '|') as skills,
     GROUP_CONCAT(DISTINCT c.nombre ORDER BY c.nombre SEPARATOR '|') as categorias
 FROM users u

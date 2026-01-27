@@ -413,6 +413,37 @@ header h1 {
     object-fit: cover;
 }
 
+.level-bars {
+    display: flex;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.level-bars span {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: #ddd;
+}
+
+.level-bars span.active {
+    background: #4caf50;
+}
+.barras-container {
+    display: flex;
+    gap: 2px;
+}
+
+.barra {
+    width: 20px;
+    height: 8px;
+    background: #ccc; /* barra vacía */
+}
+
+.barra.rellena {
+    background: #4caf50; /* barra rellena */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .form-row {
