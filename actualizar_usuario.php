@@ -74,7 +74,7 @@ try {
 
     if ($avatar2D) {
         $stmt->bind_param(
-            "ssssssssissi",
+            "ssssssssiisi",
             $nombre, $email, $ciudad, $provincia, $modalidad,
             $descripcion, $especializacion, $enlaces, $backend, $frontend,
             $avatar2D, $id

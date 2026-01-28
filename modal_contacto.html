@@ -1,0 +1,81 @@
+<!-- ============================
+     MODAL DE CONTACTO
+     ============================ -->
+
+<!-- Overlay del Modal -->
+<div id="modal-contacto" class="modal-overlay">
+    <div class="modal-container">
+        <!-- Botón de cerrar -->
+        <button class="modal-close" onclick="cerrarModalContacto()">&times;</button>
+        
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+            <h2>Contactar Profesional</h2>
+            <p id="modal-destinatario">Enviando mensaje a: <strong id="nombre-destinatario"></strong></p>
+        </div>
+
+        <!-- Formulario de contacto -->
+        <form id="form-contacto" class="modal-form">
+            <!-- Email destinatario (oculto) -->
+            <input type="hidden" id="email-destinatario" name="email_destinatario">
+            
+            <!-- Nombre del interesado -->
+            <div class="form-group">
+                <label for="nombre-remitente">Tu nombre *</label>
+                <input 
+                    type="text" 
+                    id="nombre-remitente" 
+                    name="nombre_remitente" 
+                    required
+                    placeholder="Ej: Juan Pérez">
+            </div>
+
+            <!-- Email del interesado -->
+            <div class="form-group">
+                <label for="email-remitente">Tu correo electrónico *</label>
+                <input 
+                    type="email" 
+                    id="email-remitente" 
+                    name="email_remitente" 
+                    required
+                    placeholder="tu@email.com">
+            </div>
+
+            <!-- Asunto -->
+            <div class="form-group">
+                <label for="asunto">Asunto *</label>
+                <input 
+                    type="text" 
+                    id="asunto" 
+                    name="asunto" 
+                    required
+                    placeholder="Ej: Propuesta de colaboración">
+            </div>
+
+            <!-- Mensaje -->
+            <div class="form-group">
+                <label for="mensaje">Mensaje *</label>
+                <textarea 
+                    id="mensaje" 
+                    name="mensaje" 
+                    required
+                    rows="6"
+                    placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+
+            <!-- Mensaje de respuesta -->
+            <div id="mensaje-respuesta" class="mensaje-respuesta"></div>
+
+            <!-- Botones de acción -->
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalContacto()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-enviar">
+                    <span id="btn-text">Enviar Mensaje</span>
+                    <span id="btn-spinner" class="spinner" style="display: none;">⏳</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

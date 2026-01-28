@@ -54,7 +54,8 @@ async function cargarCategoriasFiltros() {
     const categorias = await response.json();
 
     // Agregar botón "Todos" al inicio
-    container.innerHTML = '<button class="cat-btn active" data-id="all">Todos</button>';
+    container.innerHTML =
+      '<button class="cat-btn active" data-id="all">Todos</button>';
 
     // Agregar cada categoría
     categorias.forEach((cat) => {
@@ -62,12 +63,14 @@ async function cargarCategoriasFiltros() {
       btn.className = "cat-btn";
       btn.textContent = cat.nombre;
       btn.setAttribute("data-id", cat.id);
-      
+
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         // Si el botón es "Todos", limpiar selección
         if (btn.getAttribute("data-id") === "all") {
-          document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active"));
+          document
+            .querySelectorAll(".cat-btn")
+            .forEach((b) => b.classList.remove("active"));
           btn.classList.add("active");
           categoriasSeleccionadas = [];
           filtrarUsuarios();
@@ -80,7 +83,9 @@ async function cargarCategoriasFiltros() {
           if (btn.classList.contains("active")) {
             categoriasSeleccionadas.push(cat.nombre);
           } else {
-            categoriasSeleccionadas = categoriasSeleccionadas.filter(c => c !== cat.nombre);
+            categoriasSeleccionadas = categoriasSeleccionadas.filter(
+              (c) => c !== cat.nombre,
+            );
           }
           // Si no hay categorías seleccionadas, mostrar todas
           if (categoriasSeleccionadas.length === 0) {
@@ -92,7 +97,6 @@ async function cargarCategoriasFiltros() {
 
       container.appendChild(btn);
     });
-
   } catch (error) {
     console.error("Error cargando categorías:", error);
   }
@@ -187,9 +191,9 @@ function crearCard(usuario) {
             <a href="${usuario.enlaces}" target="_blank" class="btn btn-primary">
                 Ver Portfolio
             </a>
-            <button class="btn btn-secondary" onclick="contactar('${usuario.email}')">
-                Contactar
-            </button>
+            <button class="btn btn-secondary" onclick="contactar(${usuario.id})">
+            Contactar
+            </button> 
             <button class="btn btn-secondary" onclick="editarUsuario(${usuario.id})">
                 Editar
             </button>
@@ -211,36 +215,36 @@ function obtenerIniciales(nombre) {
   return nombre.substring(0, 2).toUpperCase();
 }
 
-function contactar(email) {
-  window.location.href = `mailto:${email}`;
-}
-
 function editarUsuario(id) {
   window.location.href = `editar_usuario.html?id=${id}`;
 }
 
 function eliminarUsuario(id, nombre) {
-  if (confirm(`¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`)) {
+  if (
+    confirm(
+      `¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`,
+    )
+  ) {
     const formData = new FormData();
-    formData.append('id', id);
+    formData.append("id", id);
 
-    fetch('eliminar_usuario.php', {
-      method: 'POST',
-      body: formData
+    fetch("eliminar_usuario.php", {
+      method: "POST",
+      body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('Usuario eliminado correctamente');
-        cargarUsuarios(); // Recargar la lista de usuarios
-      } else {
-        alert('Error al eliminar: ' + (data.error || 'Error desconocido'));
-      }
-    })
-    .catch(error => {
-      alert('Error al eliminar: ' + error.message);
-      console.error('Error:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Usuario eliminado correctamente");
+          cargarUsuarios(); // Recargar la lista de usuarios
+        } else {
+          alert("Error al eliminar: " + (data.error || "Error desconocido"));
+        }
+      })
+      .catch((error) => {
+        alert("Error al eliminar: " + error.message);
+        console.error("Error:", error);
+      });
   }
 }
 
@@ -269,7 +273,7 @@ function filtrarUsuarios() {
     // Filtro de categorías: si no hay seleccionadas, mostrar todas; si hay, mostrar usuarios con cualquiera de las seleccionadas
     const matchCategoria =
       categoriasSeleccionadas.length === 0 ||
-      usuario.categorias.some(cat => categoriasSeleccionadas.includes(cat));
+      usuario.categorias.some((cat) => categoriasSeleccionadas.includes(cat));
 
     return matchSearch && matchModalidad && matchCategoria;
   });
@@ -403,11 +407,11 @@ function verInfoUsuario(id) {
 
 // Función auxiliar para renderizar barras (backend/frontend)
 function renderBarras(nivel) {
-    let html = '';
-    for (let i = 0; i < 5; i++) {
-        html += `<span class="barra ${i < nivel ? 'rellena' : ''}"></span>`;
-    }
-    return `<div class="barras-container">${html}</div>`;
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    html += `<span class="barra ${i <= nivel ? "rellena" : ""}"></span>`;
+  }
+  return `<div class="barras-container">${html}</div>`;
 }
 
 // ============================
@@ -513,6 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarFormulario();
   inicializarAvatarUpload();
   cargarBotonesCategorias();
+  inicializarModalContacto();
 
   // Filtros del catálogo
   document.getElementById("search")?.addEventListener("input", filtrarUsuarios);
@@ -520,3 +525,197 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("filter-modalidad")
     ?.addEventListener("change", filtrarUsuarios);
 });
+
+// ============================
+// SISTEMA DE MODAL DE CONTACTO (MEJORADO)
+// ============================
+
+/**
+ * Abre el modal de contacto con los datos del profesional
+ * @param {number} userId - ID del usuario a contactar
+ */
+async function contactar(userId) {
+  const modal = document.getElementById('modal-contacto');
+  
+  if (!modal) {
+    console.error('Modal de contacto no encontrado');
+    return;
+  }
+
+  try {
+    // Mostrar modal con estado de carga
+    modal.classList.add('active');
+    document.body.classList.add('modal-open');
+
+    // Limpiar formulario previo
+    limpiarFormularioContacto();
+
+    // Obtener datos del profesional
+    const response = await fetch(`obtener_info.php?id=${userId}`);
+    
+    if (!response.ok) {
+      throw new Error('Error al obtener datos del profesional');
+    }
+
+    const resultado = await response.json();
+
+    if (!resultado.success) {
+      throw new Error(resultado.error || 'Error al cargar la información');
+    }
+
+    const usuario = resultado.data;
+    
+    // Configurar el formulario con los datos
+    const emailDestinatario = document.getElementById('email-destinatario');
+    const nombreDestinatario = document.getElementById('nombre-destinatario');
+
+    if (emailDestinatario) {
+      emailDestinatario.value = usuario.email;
+    }
+
+    if (nombreDestinatario) {
+      nombreDestinatario.textContent = usuario.nombre;
+    }
+
+  } catch (error) {
+    console.error('Error:', error);
+    mostrarMensajeModal('❌ Error al cargar el profesional. Intenta de nuevo.', 'error');
+    
+    // Cerrar modal después de 3 segundos
+    setTimeout(() => {
+      cerrarModalContacto();
+    }, 3000);
+  }
+}
+
+/**
+ * Cierra el modal de contacto
+ */
+function cerrarModalContacto() {
+  const modal = document.getElementById('modal-contacto');
+  if (!modal) return;
+
+  modal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+
+  // Limpiar después de la animación
+  setTimeout(() => {
+    limpiarFormularioContacto();
+  }, 300);
+}
+
+/**
+ * Limpia el formulario de contacto
+ */
+function limpiarFormularioContacto() {
+  const form = document.getElementById('form-contacto');
+  const mensajeRespuesta = document.getElementById('mensaje-respuesta');
+
+  if (form) {
+    form.reset();
+  }
+
+  if (mensajeRespuesta) {
+    mensajeRespuesta.textContent = '';
+    mensajeRespuesta.className = 'mensaje-respuesta';
+  }
+}
+
+/**
+ * Muestra un mensaje en el modal
+ */
+function mostrarMensajeModal(mensaje, tipo) {
+  const mensajeDiv = document.getElementById('mensaje-respuesta');
+  if (!mensajeDiv) return;
+
+  mensajeDiv.textContent = mensaje;
+  mensajeDiv.className = `mensaje-respuesta ${tipo}`;
+}
+
+/**
+ * Envía el formulario de contacto
+ */
+async function enviarFormularioContacto(event) {
+  event.preventDefault();
+
+  const form = document.getElementById('form-contacto');
+  const btnEnviar = document.getElementById('btn-enviar');
+  const btnText = document.getElementById('btn-text');
+  const btnSpinner = document.getElementById('btn-spinner');
+
+  // Deshabilitar botón
+  btnEnviar.disabled = true;
+  if (btnText) btnText.style.display = 'none';
+  if (btnSpinner) btnSpinner.style.display = 'inline-block';
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch('enviar_contacto.php', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error del servidor: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      mostrarMensajeModal('✅ ' + data.message, 'success');
+      form.reset();
+      
+      // Cerrar modal después de 2 segundos
+      setTimeout(() => {
+        cerrarModalContacto();
+      }, 2000);
+    } else {
+      mostrarMensajeModal('❌ ' + (data.error || 'Error al enviar'), 'error');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    mostrarMensajeModal('❌ Error de conexión. Intenta de nuevo.', 'error');
+  } finally {
+    // Rehabilitar botón
+    btnEnviar.disabled = false;
+    if (btnText) btnText.style.display = 'inline';
+    if (btnSpinner) btnSpinner.style.display = 'none';
+  }
+}
+
+/**
+ * Inicializa el sistema de contacto
+ */
+function inicializarModalContacto() {
+  const form = document.getElementById('form-contacto');
+  const modal = document.getElementById('modal-contacto');
+
+  if (!form || !modal) {
+    console.warn('Elementos del modal de contacto no encontrados');
+    return;
+  }
+
+  // Evento del formulario
+  form.addEventListener('submit', enviarFormularioContacto);
+
+  // Cerrar con clic en overlay
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      cerrarModalContacto();
+    }
+  });
+
+  // Cerrar con tecla ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      cerrarModalContacto();
+    }
+  });
+
+  // Cerrar con botón X
+  const btnCerrar = modal.querySelector('.modal-close');
+  if (btnCerrar) {
+    btnCerrar.addEventListener('click', cerrarModalContacto);
+  }
+}

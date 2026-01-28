@@ -7,11 +7,18 @@ function crearBarras(containerId, inputId, valorInicial = 0) {
 
     for (let i = 1; i <= 5; i++) {
         const bar = document.createElement("span");
+        // Guardar el nivel en un data attribute para evitar problemas de closure
+        bar.setAttribute("data-nivel", i);
+        
         if (i <= valorInicial) bar.classList.add("active");
 
-        bar.addEventListener("click", () => {
-            input.value = i;
-            actualizarBarras(container, i);
+        bar.addEventListener("click", (e) => {
+            // Obtener el nivel desde el data attribute
+            const nivel = parseInt(e.target.getAttribute("data-nivel"));
+            console.log(`Click en barra con data-nivel: ${nivel}`);
+            input.value = nivel;
+            console.log(`input.value después de click: ${input.value}`);
+            actualizarBarras(container, nivel);
         });
 
         container.appendChild(bar);
@@ -19,10 +26,15 @@ function crearBarras(containerId, inputId, valorInicial = 0) {
 }
 
 function actualizarBarras(container, valor) {
+    console.log(`actualizarBarras llamada con valor: ${valor}`);
     const bars = container.querySelectorAll("span");
-    bars.forEach((bar, index) => {
-        if (index < valor) bar.classList.add("active");
-        else bar.classList.remove("active");
+    bars.forEach((bar) => {
+        const nivel = parseInt(bar.getAttribute("data-nivel"));
+        if (nivel <= valor) {
+            bar.classList.add("active");
+        } else {
+            bar.classList.remove("active");
+        }
     });
 }
 
@@ -91,6 +103,10 @@ async function cargarUsuario(id) {
 
     const u = data.data;
 
+    console.log("Usuario cargado de la BD:");
+    console.log("backend en BD:", u.backend, "tipo:", typeof u.backend);
+    console.log("frontend en BD:", u.frontend, "tipo:", typeof u.frontend);
+
     document.getElementById("userId").value = u.id;
     document.getElementById("nombre").value = u.nombre;
     document.getElementById("email").value = u.email;
@@ -119,8 +135,13 @@ async function cargarUsuario(id) {
         });
     }
 
-    crearBarras("backend-bars", "backend", parseInt(u.backend));
-    crearBarras("frontend-bars", "frontend", parseInt(u.frontend));
+    const backendParsed = parseInt(u.backend);
+    const frontendParsed = parseInt(u.frontend);
+    console.log("parseInt(backend):", backendParsed);
+    console.log("parseInt(frontend):", frontendParsed);
+
+    crearBarras("backend-bars", "backend", backendParsed);
+    crearBarras("frontend-bars", "frontend", frontendParsed);
 
     if (u.avatar2D) {
         document.getElementById("avatarPreview").innerHTML =
@@ -135,6 +156,11 @@ document.getElementById("editarForm").addEventListener("submit", async (e) => {
 
     const formData = new FormData(e.target);
 
+    // Debug: verificar qué valores se están enviando
+    console.log("VALORES ANTES DE ENVIAR:");
+    console.log("backend:", document.getElementById("backend").value);
+    console.log("frontend:", document.getElementById("frontend").value);
+
     // Recoger skills y categorías seleccionadas
     const selectedSkills = [
         ...document.querySelectorAll("input[name='skills[]']:checked"),
@@ -145,6 +171,12 @@ document.getElementById("editarForm").addEventListener("submit", async (e) => {
 
     formData.append("skills", selectedSkills.join(","));
     formData.append("categorias", selectedCats.join(","));
+
+    // Debug: mostrar qué se envía en FormData
+    console.log("FormData enviado:");
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
 
     try {
         const res = await fetch("actualizar_usuario.php", {
