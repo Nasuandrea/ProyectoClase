@@ -133,6 +133,7 @@ function generarCards(usuarios){
         card.innerHTML = `
         <h3>${usuario.nombre}</h3>
         <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+        <p>Profesión: ${usuario.especializacion}</p>
         `;
         contenedorCard.appendChild(card);
     });
