@@ -13,6 +13,7 @@ if (!isset($_GET['id'])) {
 $userId = intval($_GET['id']); // seguridad contra inyecciones
 
 $sql = "SELECT 
+    u.id,
     u.nombre,
     u.enlaces,
     u.descripcion,

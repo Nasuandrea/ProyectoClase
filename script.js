@@ -41,6 +41,72 @@ async function cargarUsuarios() {
 }
 
 // ============================
+// CARGA DE CATEGORÍAS PARA FILTROS
+// ============================
+let categoriasSeleccionadas = []; // Array para categorías múltiples
+
+async function cargarCategoriasFiltros() {
+  const container = document.getElementById("categories-container");
+  if (!container) return;
+
+  try {
+    const response = await fetch("obtener_categorias.php");
+    const categorias = await response.json();
+
+    // Agregar botón "Todos" al inicio
+    container.innerHTML = '<button class="cat-btn active" data-id="all">Todos</button>';
+
+    // Agregar cada categoría
+    categorias.forEach((cat) => {
+      const btn = document.createElement("button");
+      btn.className = "cat-btn";
+      btn.textContent = cat.nombre;
+      btn.setAttribute("data-id", cat.id);
+      
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        // Si el botón es "Todos", limpiar selección
+        if (btn.getAttribute("data-id") === "all") {
+          document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          categoriasSeleccionadas = [];
+          filtrarUsuarios();
+        } else {
+          // Remover "Todos" si estaba activo
+          document.querySelector('[data-id="all"]').classList.remove("active");
+          // Toggle active en el botón clickeado
+          btn.classList.toggle("active");
+          // Actualizar array de categorías seleccionadas
+          if (btn.classList.contains("active")) {
+            categoriasSeleccionadas.push(cat.nombre);
+          } else {
+            categoriasSeleccionadas = categoriasSeleccionadas.filter(c => c !== cat.nombre);
+          }
+          // Si no hay categorías seleccionadas, mostrar todas
+          if (categoriasSeleccionadas.length === 0) {
+            document.querySelector('[data-id="all"]').classList.add("active");
+          }
+          filtrarUsuarios();
+        }
+      });
+
+      container.appendChild(btn);
+    });
+
+  } catch (error) {
+    console.error("Error cargando categorías:", error);
+  }
+}
+
+// ============================
+// FILTRO POR CATEGORÍA (MÚLTIPLE)
+// ============================
+function filtrarPorCategoria() {
+  // Esta función ahora se usa a través de filtrarUsuarios()
+  filtrarUsuarios();
+}
+
+// ============================
 // GENERACIÓN DE CARDS
 // ============================
 function generarCards(usuarios) {
@@ -143,7 +209,7 @@ function obtenerIniciales(nombre) {
 }
 
 function contactar(email) {
-  alert(`Contactar con: ${email}`);
+  window.location.href = `mailto:${email}`;
 }
 
 function editarUsuario(id) {
@@ -172,7 +238,12 @@ function filtrarUsuarios() {
     const matchModalidad =
       modalidadFilter === "" || usuario.modalidad === modalidadFilter;
 
-    return matchSearch && matchModalidad;
+    // Filtro de categorías: si no hay seleccionadas, mostrar todas; si hay, mostrar usuarios con cualquiera de las seleccionadas
+    const matchCategoria =
+      categoriasSeleccionadas.length === 0 ||
+      usuario.categorias.some(cat => categoriasSeleccionadas.includes(cat));
+
+    return matchSearch && matchModalidad && matchCategoria;
   });
 
   generarCards(usuariosFiltrados);
@@ -183,20 +254,17 @@ function mostrarMensaje(elementId) {
   if (el) el.style.display = "block";
 }
 
-// Cargar Avatar 2D
+// Avatar upload para formulario de registro
 function inicializarAvatarUpload() {
   const avatarPreview = document.getElementById("avatarPreview");
   const avatarInput = document.getElementById("avatarInput");
-  const avatarPlus = document.getElementById("avatarPlus");
 
   if (!avatarPreview || !avatarInput) return;
 
-  // Al hacer click en el círculo, abrir selector
   avatarPreview.addEventListener("click", () => {
     avatarInput.click();
   });
 
-  // Cuando se selecciona una imagen
   avatarInput.addEventListener("change", () => {
     const file = avatarInput.files[0];
     if (!file) return;
@@ -215,7 +283,7 @@ function inicializarAvatarUpload() {
   });
 }
 
-//Funcion para que las tarjetas cambien a info
+// Ver información detallada del usuario
 function verInfoUsuario(id) {
   const container = document.getElementById("cards-container");
   if (!container) return;
@@ -286,10 +354,15 @@ function verInfoUsuario(id) {
                         <div class="card-section-title">Nivel Frontend</div>
                         ${renderBarras(Number(usuario.frontend))}
                     </div>
+
+                    <div class="card-section">
+                        <div class="card-section-title">Enlaces</div>
+                        <a href="${usuario.enlaces}" target="_blank">${usuario.enlaces}</a>
+                    </div>
                 </div>
 
                 <div class="card-footer">
-                    <a href="${usuario.enlaces}" target="_blank" class="btn btn-primary">Ver Portfolio</a>
+                    <button class="btn btn-secondary" onclick="cargarUsuarios()">Volver al catálogo</button>
                 </div>
             `;
 
@@ -407,9 +480,11 @@ function inicializarFormulario() {
 // ============================
 document.addEventListener("DOMContentLoaded", () => {
   cargarUsuarios();
+  cargarCategoriasFiltros();
   cargarSkillsYCategorias();
   inicializarFormulario();
   inicializarAvatarUpload();
+  cargarBotonesCategorias();
 
   // Filtros del catálogo
   document.getElementById("search")?.addEventListener("input", filtrarUsuarios);

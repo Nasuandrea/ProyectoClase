@@ -1,9 +1,5 @@
 <?php
-/**
- * @var mixed
- */
 ini_set('display_errors', 1);
-
 header('Content-Type: application/json; charset=utf-8');
 require_once 'conexion.php';
 
@@ -25,3 +21,4 @@ if ($resultado) {
 }
 
 $conn->close();
+?>

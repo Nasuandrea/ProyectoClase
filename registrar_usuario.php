@@ -13,9 +13,6 @@ $enlaces     = $_POST['enlaces'];
 // Password técnico ficticio
 $fakePassword = password_hash("autonomix_temp", PASSWORD_BCRYPT);
 
-// Avatar 3D fijo por ahora
-$avatar3D = "default3d.glb";
-
 // Skills y categorías
 $skills     = array_map('trim', explode(",", $_POST['skills']));
 $categorias = array_map('trim', explode(",", $_POST['categorias']));
@@ -27,6 +24,8 @@ try {
     /* =========================
        1. SUBIR AVATAR 2D
        ========================= */
+    $avatar2D = "avatar.png"; // Avatar por defecto
+    
     if (isset($_FILES['avatar2D']) && $_FILES['avatar2D']['error'] === 0) {
         $carpeta = "uploads/avatars/";
         if (!is_dir($carpeta)) {
@@ -38,10 +37,6 @@ try {
 
         move_uploaded_file($_FILES['avatar2D']['tmp_name'], $rutaFinal);
         $avatar2D = $rutaFinal;
-    } else 
-    {
-        print($avatar2D);
-        $avatar2D = "avatar.png";
     }
 
     /* =========================
@@ -49,12 +44,12 @@ try {
        ========================= */
     $stmt = $conn->prepare("
         INSERT INTO users 
-        (nombre, email, password, enlaces, descripcion, ciudad, provincia, modalidad, avatar2D, avatar3D)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (nombre, email, password, enlaces, descripcion, ciudad, provincia, modalidad, avatar2D)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     $stmt->bind_param(
-        "ssssssssss",
+        "sssssssss",
         $nombre,
         $email,
         $fakePassword,
@@ -63,8 +58,7 @@ try {
         $ciudad,
         $provincia,
         $modalidad,
-        $avatar2D,
-        $avatar3D
+        $avatar2D
     );
 
     $stmt->execute();
