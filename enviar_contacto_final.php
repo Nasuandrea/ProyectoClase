@@ -86,7 +86,13 @@ function enviarPHPMailer($dest, $nom, $rem, $asunto, $msg) {
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
         
-        $mail->setFrom($rem, $nom);
+        // Evitar rechazo al usar SMTP: el remitente debe ser la cuenta autenticada.
+        if (stripos($mail->Username, 'tu-email') !== false || stripos($mail->Password, 'tu-contraseña') !== false) {
+            registrarLog("✗ PHPMailer: credenciales SMTP no configuradas (cambia SMTP_USER/SMTP_PASSWORD)");
+            return false;
+        }
+
+        $mail->setFrom($mail->Username, 'Autonomix');
         $mail->addAddress($dest);
         $mail->addReplyTo($rem, $nom);
         $mail->isHTML(false);
@@ -96,7 +102,7 @@ function enviarPHPMailer($dest, $nom, $rem, $asunto, $msg) {
         $mail->send();
         registrarLog("✓ Email enviado con PHPMailer a: $dest");
         return true;
-    } catch (Exception $e) {
+    } catch (\PHPMailer\PHPMailer\Exception $e) {
         registrarLog("✗ PHPMailer error: " . $e->getMessage());
         return false;
     }

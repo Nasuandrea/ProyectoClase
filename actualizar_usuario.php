@@ -27,8 +27,8 @@ try {
     $descripcion = trim($_POST['descripcion']);
     $especializacion = trim($_POST['especializacion']);
     $enlaces = trim($_POST['enlaces']);
-    $backend = intval($_POST['backend']);
-    $frontend = intval($_POST['frontend']);
+    $backend = strval($_POST['backend']);
+    $frontend = strval($_POST['frontend']);
 
     if (empty($id) || $id <= 0) {
         throw new Exception("ID de usuario inválido");
@@ -74,14 +74,14 @@ try {
 
     if ($avatar2D) {
         $stmt->bind_param(
-            "ssssssssiisi",
+            "sssssssssssi",
             $nombre, $email, $ciudad, $provincia, $modalidad,
             $descripcion, $especializacion, $enlaces, $backend, $frontend,
             $avatar2D, $id
         );
     } else {
         $stmt->bind_param(
-            "ssssssssiii",
+            "ssssssssssi",
             $nombre, $email, $ciudad, $provincia, $modalidad,
             $descripcion, $especializacion, $enlaces, $backend, $frontend,
             $id

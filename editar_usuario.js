@@ -93,6 +93,28 @@ async function cargarSkillsYCategorias() {
         console.error("Error cargando skills o categorías:", error);
     }
 }
+//Agregar nueva skill
+function agregarSkill() {
+    const input = document.getElementById("nueva-skill");
+    const nombreSkill = input.value.trim();
+    const lista = document.getElementById("skills-list");
+
+    if (nombreSkill === "") return;
+
+    // Verificar si ya existe en la lista para no duplicar visualmente
+    const existe = Array.from(lista.querySelectorAll('input')).some(i => i.value.toLowerCase() === nombreSkill.toLowerCase());
+
+    if (!existe) {
+        const label = document.createElement("label");
+        label.innerHTML = `
+            <input type="checkbox" name="skills[]" value="${nombreSkill}" checked>
+            <span>${nombreSkill}</span>
+        `;
+        lista.appendChild(label);
+    }
+    
+    input.value = ""; // Limpiar input
+}
 
 // Cargar usuario por id
 async function cargarUsuario(id) {
@@ -135,8 +157,8 @@ async function cargarUsuario(id) {
         });
     }
 
-    const backendParsed = parseInt(u.backend);
-    const frontendParsed = parseInt(u.frontend);
+    const backendParsed = String(u.backend);
+    const frontendParsed = String(u.frontend);
     console.log("parseInt(backend):", backendParsed);
     console.log("parseInt(frontend):", frontendParsed);
 
