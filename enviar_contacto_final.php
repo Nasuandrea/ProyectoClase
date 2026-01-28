@@ -13,6 +13,20 @@ ini_set('log_errors', 1);
 
 header('Content-Type: application/json; charset=utf-8');
 
+// ========== CARGAR VARIABLES DE ENTORNO ==========
+if (file_exists(__DIR__ . '/.env')) {
+    $envFile = file_get_contents(__DIR__ . '/.env');
+    $lines = explode("\n", trim($envFile));
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line) || strpos($line, '#') === 0) continue;
+        if (strpos($line, '=') !== false) {
+            [$key, $value] = explode('=', $line, 2);
+            putenv(trim($key) . '=' . trim($value));
+        }
+    }
+}
+
 $logDir = __DIR__ . '/logs';
 if (!is_dir($logDir)) {
     mkdir($logDir, 0755, true);

@@ -15,6 +15,7 @@ $userId = intval($_GET['id']); // seguridad contra inyecciones
 $sql = "SELECT 
     u.id,
     u.nombre,
+    u.email,
     u.enlaces,
     u.descripcion,
     u.ciudad,

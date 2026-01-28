@@ -5,6 +5,20 @@
  * Acceder a: http://tu-sitio.com/diagnostico_email.php
  */
 
+// ========== CARGAR VARIABLES DE ENTORNO ==========
+if (file_exists(__DIR__ . '/.env')) {
+    $envFile = file_get_contents(__DIR__ . '/.env');
+    $lines = explode("\n", trim($envFile));
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line) || strpos($line, '#') === 0) continue;
+        if (strpos($line, '=') !== false) {
+            [$key, $value] = explode('=', $line, 2);
+            putenv(trim($key) . '=' . trim($value));
+        }
+    }
+}
+
 // Estilos para mejor visualización
 echo "<style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
@@ -119,9 +133,9 @@ if (is_dir($logsDir) && file_exists($logsDir . '/contactos.log')) {
 
 echo "</div>";
 
-// ========== SECCIÓN 7: PRUEBA DE ENVÍO ==========
+// ========== SECCIÓN 7: PRUEBA mail() ==========
 echo "<div class='section warning'>";
-echo "<h2>7. Prueba de Envío de Email</h2>";
+echo "<h2>7. Prueba de mail() de PHP</h2>";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['test_email'])) {
     $testEmail = filter_var($_POST['test_email'], FILTER_SANITIZE_EMAIL);
@@ -143,11 +157,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['test_email'])) {
         
         if ($resultado) {
             echo "<div style='background: #d4edda; padding: 10px; border: 1px solid #28a745; border-radius: 4px; color: #155724;'>";
-            echo "✅ <strong>Email enviado!</strong> Revisa tu bandeja de entrada (incluyendo spam).";
+            echo "✅ <strong>Email enviado con mail()!</strong> Revisa tu bandeja de entrada (incluyendo spam).";
             echo "</div>";
         } else {
             echo "<div style='background: #f8d7da; padding: 10px; border: 1px solid #dc3545; border-radius: 4px; color: #721c24;'>";
-            echo "❌ <strong>Error:</strong> No se pudo enviar el email. Verifica la configuración SMTP del servidor.";
+            echo "❌ <strong>Error:</strong> No se pudo enviar el email con mail(). Se usará PHPMailer.";
             echo "</div>";
         }
     } else {
@@ -157,20 +171,110 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['test_email'])) {
 
 echo "<form method='POST' style='margin-top: 10px;'>";
 echo "<input type='email' name='test_email' placeholder='tu@email.com' required>";
-echo "<button type='submit' class='test-button'>Enviar Email de Prueba</button>";
+echo "<button type='submit' class='test-button'>Enviar Email con mail()</button>";
 echo "</form>";
 echo "</div>";
 
-// ========== SECCIÓN 8: RECOMENDACIONES ==========
+// ========== SECCIÓN 8: PRUEBA PHPMailer ==========
+echo "<div class='section warning'>";
+echo "<h2>8. Prueba de PHPMailer</h2>";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['test_phpmailer'])) {
+    $testEmail = filter_var($_POST['test_phpmailer'], FILTER_SANITIZE_EMAIL);
+    
+    if (filter_var($testEmail, FILTER_VALIDATE_EMAIL)) {
+        echo "<p><strong>Enviando email con PHPMailer a: {$testEmail}</strong></p>";
+        
+        if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+            echo "<div style='background: #f8d7da; padding: 10px; border: 1px solid #dc3545; border-radius: 4px; color: #721c24;'>";
+            echo "❌ <strong>Error:</strong> PHPMailer no está instalado. Ejecuta: composer require phpmailer/phpmailer";
+            echo "</div>";
+        } else {
+            require __DIR__ . '/vendor/autoload.php';
+            
+            try {
+                $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+                
+                $smtpHost = getenv('SMTP_HOST');
+                $smtpUser = getenv('SMTP_USER');
+                $smtpPass = getenv('SMTP_PASSWORD');
+                $smtpPort = getenv('SMTP_PORT') ?: '587';
+                
+                if (!$smtpHost || !$smtpUser || !$smtpPass) {
+                    echo "<div style='background: #fff3cd; padding: 10px; border: 1px solid #ffc107; border-radius: 4px; color: #856404;'>";
+                    echo "⚠️ <strong>Advertencia:</strong> Variables de entorno SMTP no configuradas. ";
+                    echo "Configura: SMTP_HOST, SMTP_USER, SMTP_PASSWORD en tu sistema.";
+                    echo "</div>";
+                } else {
+                    $mail->isSMTP();
+                    $mail->Host = $smtpHost;
+                    $mail->SMTPAuth = true;
+                    $mail->Username = $smtpUser;
+                    $mail->Password = $smtpPass;
+                    $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = $smtpPort;
+                    $mail->CharSet = 'UTF-8';
+                    $mail->Debugoutput = 'html';
+                    
+                    $mail->setFrom($smtpUser, 'Autonomix');
+                    $mail->addAddress($testEmail);
+                    $mail->addReplyTo($smtpUser);
+                    $mail->isHTML(false);
+                    $mail->Subject = '[TEST PHPMailer] Prueba - ' . date('Y-m-d H:i:s');
+                    $mail->Body = "Hola,\n\nEste es un email de prueba enviado con PHPMailer.\n\nFecha: " . date('Y-m-d H:i:s') . "\nDestino: {$testEmail}\n\nSi recibiste este mensaje, ¡PHPMailer funciona correctamente!\n\nSaludos,\nAutonomix";
+                    
+                    $mail->send();
+                    
+                    echo "<div style='background: #d4edda; padding: 10px; border: 1px solid #28a745; border-radius: 4px; color: #155724;'>";
+                    echo "✅ <strong>¡Email enviado con PHPMailer!</strong><br>";
+                    echo "Servidor: {$smtpHost}:{$smtpPort}<br>";
+                    echo "Usuario: {$smtpUser}<br>";
+                    echo "Destino: {$testEmail}<br>";
+                    echo "Revisa tu bandeja de entrada (incluyendo spam).";
+                    echo "</div>";
+                }
+                
+            } catch (\PHPMailer\PHPMailer\Exception $e) {
+                echo "<div style='background: #f8d7da; padding: 10px; border: 1px solid #dc3545; border-radius: 4px; color: #721c24;'>";
+                echo "❌ <strong>Error PHPMailer:</strong><br>";
+                echo htmlspecialchars($e->getMessage());
+                echo "</div>";
+            } catch (Exception $e) {
+                echo "<div style='background: #f8d7da; padding: 10px; border: 1px solid #dc3545; border-radius: 4px; color: #721c24;'>";
+                echo "❌ <strong>Error general:</strong><br>";
+                echo htmlspecialchars($e->getMessage());
+                echo "</div>";
+            }
+        }
+    } else {
+        echo "<p style='color: #dc3545;'>❌ Email inválido</p>";
+    }
+}
+
+echo "<form method='POST' style='margin-top: 10px;'>";
+echo "<input type='email' name='test_phpmailer' placeholder='tu@email.com' required>";
+echo "<button type='submit' class='test-button'>Enviar Email con PHPMailer</button>";
+echo "</form>";
+echo "</div>";
+
+// ========== SECCIÓN 9: RECOMENDACIONES ==========
 echo "<div class='section info'>";
-echo "<h2>8. Recomendaciones</h2>";
+echo "<h2>9. Recomendaciones</h2>";
 echo "<ul>";
-echo "<li>Si <strong>mail() no funciona</strong>: Instala PHPMailer con composer</li>";
+echo "<li>Si <strong>mail() no funciona</strong>: Usa PHPMailer con credenciales SMTP</li>";
 echo "<li><strong>Contactos pendientes</strong> se guardan en <code>/contactos_pendientes/</code></li>";
 echo "<li>Los <strong>logs</strong> se guardan en <code>/logs/contactos.log</code></li>";
 echo "<li>Revisa los logs para <strong>debuggear</strong> problemas</li>";
-echo "<li>Si usas <strong>PHPMailer</strong>, configura las credenciales SMTP en <code>enviar_contacto.php</code></li>";
+echo "<li>Para <strong>PHPMailer</strong>: Configura variables de entorno SMTP_HOST, SMTP_USER, SMTP_PASSWORD, SMTP_PORT</li>";
 echo "<li>Para <strong>Gmail</strong>: Usa contraseña de aplicación, no tu contraseña normal</li>";
+echo "<li><strong>Variables de entorno recomendadas</strong>:<br>";
+echo "<code style='display: block; padding: 10px; background: #f4f4f4; margin: 5px 0;'>";
+echo "SMTP_HOST=smtp.gmail.com<br>";
+echo "SMTP_USER=tu-email@gmail.com<br>";
+echo "SMTP_PASSWORD=tu-contraseña-de-aplicación<br>";
+echo "SMTP_PORT=587";
+echo "</code>";
+echo "</li>";
 echo "</ul>";
 echo "</div>";
 

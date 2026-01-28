@@ -8,9 +8,12 @@
 <body>
 
 <header>
-    <div class="container">
-        <h1>✏️ Autonomix - Editar autónomo</h1>
-        <p class="subtitle">Modifica el perfil de un autónomo</p>
+    <div class="container header-flex">
+        <div>
+            <h1>✏️ Autonomix - Editar autónomo</h1>
+            <p class="subtitle">Modifica el perfil de un autónomo</p>
+        </div>
+        <a href="index.html" class="btn btn-secondary">🏠 Volver al inicio</a>
     </div>
 </header>
 
@@ -56,30 +59,27 @@
             <textarea name="descripcion" id="descripcion" placeholder="Descripción profesional"></textarea>
             <input type="text" name="especializacion" id="especializacion" placeholder="Especialización">
 
-            <!-- Backend -->
             <div class="card-section">
                 <div class="card-section-title">Nivel Backend</div>
                 <div class="level-bars" id="backend-bars"></div>
                 <input type="hidden" name="backend" id="backend">
             </div>
 
-            <!-- Frontend -->
             <div class="card-section">
                 <div class="card-section-title">Nivel Frontend</div>
                 <div class="level-bars" id="frontend-bars"></div>
                 <input type="hidden" name="frontend" id="frontend">
             </div>
 
-            <!-- Skills -->
             <div class="card-section">
+                <div class="card-section-title">Habilidades</div>
                 <div class="skill-input-container">
-        <input type="text" id="nueva-skill" placeholder="Ej: React, Figma...">
-        <button type="button" onclick="agregarSkill()">Añadir</button>
-    </div>
-    <div id="skills-list" class="checkbox-grid"></div>
+                    <input type="text" id="nueva-skill" placeholder="Ej: React, Figma...">
+                    <button type="button" class="btn btn-small" onclick="agregarSkill()">Añadir</button>
+                </div>
+                <div id="skills-list" class="checkbox-grid"></div>
             </div>
 
-            <!-- Categorías -->
             <div class="card-section">
                 <div class="card-section-title">Categorías</div>
                 <div id="categories-list" class="checkbox-grid"></div>

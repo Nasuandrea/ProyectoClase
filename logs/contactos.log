@@ -1,0 +1,45 @@
+[2026-01-28 12:32:11] ══════════════════════════════════════════
+[2026-01-28 12:32:11] ➜ INICIO: Procesando contacto de brea00jorge@gmail.com a brea00jorge@gmail.com
+[2026-01-28 12:32:11] 📧 Intentando enviar con mail() a: brea00jorge@gmail.com
+[2026-01-28 12:32:13] ✗ mail() falló para brea00jorge@gmail.com
+[2026-01-28 12:32:13] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:32:13] 📧 Intentando enviar con PHPMailer a: brea00jorge@gmail.com
+[2026-01-28 12:32:14] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
+[2026-01-28 12:32:14] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:32:14] ══════════════════════════════════════════
+[2026-01-28 12:43:50] ══════════════════════════════════════════
+[2026-01-28 12:43:50] ➜ INICIO: Procesando contacto de brea00jorge@gmail.com a brea00jorge@gmail.com
+[2026-01-28 12:43:50] 📧 Intentando enviar con mail() a: brea00jorge@gmail.com
+[2026-01-28 12:43:52] ✗ mail() falló para brea00jorge@gmail.com
+[2026-01-28 12:43:52] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:43:52] 📧 Intentando enviar con PHPMailer a: brea00jorge@gmail.com
+[2026-01-28 12:43:54] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
+[2026-01-28 12:43:54] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:43:54] ══════════════════════════════════════════
+[2026-01-28 12:48:17] ══════════════════════════════════════════
+[2026-01-28 12:48:17] ➜ INICIO: Procesando contacto de brea00jorge@gmail.com a brea00jorge@gmail.com
+[2026-01-28 12:48:17] 📧 Intentando enviar con mail() a: brea00jorge@gmail.com
+[2026-01-28 12:48:19] ✗ mail() falló para brea00jorge@gmail.com
+[2026-01-28 12:48:19] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:48:19] 📧 Intentando enviar con PHPMailer a: brea00jorge@gmail.com
+[2026-01-28 12:48:20] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
+[2026-01-28 12:48:20] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:48:20] ══════════════════════════════════════════
+[2026-01-28 12:49:21] ══════════════════════════════════════════
+[2026-01-28 12:49:21] ➜ INICIO: Procesando contacto de brea00jorge@gmail.com a brea00jorge@gmail.com
+[2026-01-28 12:49:21] 📧 Intentando enviar con mail() a: brea00jorge@gmail.com
+[2026-01-28 12:49:23] ✗ mail() falló para brea00jorge@gmail.com
+[2026-01-28 12:49:23] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:49:23] 📧 Intentando enviar con PHPMailer a: brea00jorge@gmail.com
+[2026-01-28 12:49:24] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
+[2026-01-28 12:49:24] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:49:24] ══════════════════════════════════════════
+[2026-01-28 12:50:23] ══════════════════════════════════════════
+[2026-01-28 12:50:23] ➜ INICIO: Procesando contacto de sepulvedapeterson@gmail.com a brea00jorge@gmail.com
+[2026-01-28 12:50:23] 📧 Intentando enviar con mail() a: brea00jorge@gmail.com
+[2026-01-28 12:50:25] ✗ mail() falló para brea00jorge@gmail.com
+[2026-01-28 12:50:25] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:50:25] 📧 Intentando enviar con PHPMailer a: brea00jorge@gmail.com
+[2026-01-28 12:50:26] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
+[2026-01-28 12:50:26] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:50:26] ══════════════════════════════════════════
