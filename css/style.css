@@ -1,0 +1,198 @@
+:root {
+    --color-principal: #B0DFB7;
+    --color-secundario: #F3E1E4;
+    --color-sombra: #75977A;
+    --color-tarjeta-titulo: #1F2933;
+    --color-negro: #000;
+    --color-blanco: #FFF;
+
+    --borde: 4px solid;
+
+    --fuente-tarjeta-avatar: 20px;
+
+    /* Versión movil */
+    --fuente-tarjeta-grande: 20px;
+    --fuente-tarjeta-pequeña: 12px;
+
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    image-rendering: pixelated;
+}
+
+body {
+    background-color: var(--color-secundario);
+    font-family: 'VT323', monospace;
+    text-transform: uppercase;
+}
+
+/* HEADER */
+.main-header {
+    background: var(--color-tarjeta-titulo);
+    border-bottom: var(--borde) var(--color-tarjeta-titulo);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+.brand-name {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--color-principal);
+}
+
+.slogan-name {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--color-principal);
+}
+
+.pill-search {
+    border: var(--borde) var(--color-tarjeta-titulo);
+    padding: 8px;
+    font-family: inherit;
+    font-size: 20px;
+}
+
+.search-btn {
+border: var(--borde) var(--color-tarjeta-titulo);
+font-size: 24px;    
+}
+
+.user-pill {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-principal);
+}
+
+
+
+/* HERO */
+.hero-gaming {
+    height: 200px;
+    background-color: var(--color-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-box {
+    width: 700px;
+    height: 94px;
+}
+
+.hero-gaming h1 {
+    width: 700px;
+    height: 94px;
+    font-size: 48px;
+    color: var(--color-tarjeta-titulo);
+    background: #FFFCFC;
+    padding: 15px;
+    border: var(--borde) var(--color-negro);
+    box-shadow: 8px 8px 0px var(--color-sombra);
+}
+
+/* CATEGORÍAS 6x2 */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 30px;
+}
+
+/* Botónes de filtro */
+.cat-btn {
+    background: var(--color-principal);
+    border: var(--borde) var(--color-tarjeta-titulo);
+    padding: 15px;
+    font-family: inherit;
+    font-size: 19.2px;
+    cursor: pointer;
+    color:var(--color-tarjeta-titulo);
+}
+
+.cat-btn:hover {
+    color: var(--color-blanco);
+    background: var(--color-tarjeta-titulo);
+}
+
+.cat-btn:active {
+    transform: translateY(4px);
+}
+
+/* CARTAS VERTICALES (4 COLUMNAS) */
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.character-card {
+    background: var(--color-negro);
+    border: var(--borde) var(--color-negro);
+    box-shadow: 10px 10px 0px var(--color-sombra);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    color: #fffafa;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.card-header h3 {
+    font-weight: normal;
+}
+
+.player-badge {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+}
+
+.avatar-silhouette {
+    background-image: url(../img/usuario.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 240px;
+    height: 276px;
+}
+
+.card-footer-info {
+    padding: 15px;
+    background: var(--color-principal);
+    border-top: var(--borde);
+    text-align: center;
+}
+
+/* FOOTER */
+.second-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #222;
+    color: #fff;
+    border-top: var(--borde);
+}
+
+.up-arrow {
+    background: #fff;
+    color: #000;
+    padding: 5px 20px;
+    border: 2px solid #000;
+    font-size: 2rem;
+}
