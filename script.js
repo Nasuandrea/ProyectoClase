@@ -194,6 +194,9 @@ function crearCard(usuario) {
                 Editar
             </button>
             <button class="btn btn-secondary" onclick="verInfoUsuario(${usuario.id})">Ver más</button>
+            <button class="btn btn-danger" onclick="eliminarUsuario(${usuario.id}, '${usuario.nombre}')">
+                🗑
+            </button>
         </div>
     `;
 
@@ -214,6 +217,31 @@ function contactar(email) {
 
 function editarUsuario(id) {
   window.location.href = `editar_usuario.html?id=${id}`;
+}
+
+function eliminarUsuario(id, nombre) {
+  if (confirm(`¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`)) {
+    const formData = new FormData();
+    formData.append('id', id);
+
+    fetch('eliminar_usuario.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Usuario eliminado correctamente');
+        cargarUsuarios(); // Recargar la lista de usuarios
+      } else {
+        alert('Error al eliminar: ' + (data.error || 'Error desconocido'));
+      }
+    })
+    .catch(error => {
+      alert('Error al eliminar: ' + error.message);
+      console.error('Error:', error);
+    });
+  }
 }
 
 // ============================

@@ -285,6 +285,15 @@ header h1 {
     background: var(--border-color);
 }
 
+.btn-danger {
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
 /* Error Message */
 .error-message {
     background: rgba(239, 68, 68, 0.1);
