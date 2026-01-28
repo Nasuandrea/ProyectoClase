@@ -5,37 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-.pill-search {
-    border: var(--borde) var(--color-tarjeta-titulo);
-    padding: 8px;
-    font-family: inherit;
-    font-size: 20px;
-    background-color: rgb(105, 105, 244);
-}
 
-.search-btn {
-border: var(--borde) var(--color-tarjeta-titulo);
-font-size: 24px;
-cursor: pointer;
-background-color: blue;
-
-}
-</style>
 <body>
     <div class="search-container">
-            <input type="text" class="pill-search" id="searchInput" 
+            <!-- <input type="text" class="pill-search" id="searchInput" 
              placeholder="BUSCAR TALENTO...">
             <button class="search-btn">
                 <img src="/search.png" alt="searchIcon">
-            </button>
+            </button> -->
+        <form class="header-search"> <!-- INSETAR AQUÍ PHP BUSCADOR -->
+            <input type="text" name="q" class="search-input" placeholder="BUSCAR TALENTO...">
+            <button type="submit" class="search-btn">🔍</button>
+        </form>
     </div>
     <div id="resultado">
 
     </div>
-<script>
-
-    // src="barra-busqueda.js"
-</script>
+<script src="barra-busqueda.js"></script>
+<script src="modal-tarjetas.js"></script>
 </body>
 </html>
