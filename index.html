@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Avatar 3D</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div id="app-container">
+
+        <header class="main-header">
+            <div class="logo">AUTONONIX</div>
+            <div class="tagline">PROFESIONALES CON IDENTIDAD PROPIA</div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <input type="text" id="search" placeholder="BUSCAR TALENTO...">
+                    <button>&#x1F50D;</button>
+                </div>
+                <a href="#" id="register-btn">LOGIN / REGISTRO</a>
+            </div>
+        </header>
+
+        <div class="main-title-container">
+            <h2>PROFESIONALES CON IDENTIDAD PROPIA</h2>
+        </div>
+
+        <!-- MODO 1: Galería Inicial (Ahora con usuarios) -->
+        <div id="initial-gallery">
+            <div id="contenedorBotonCategorias" class="contenedor-boton-categorias">
+                <!-- Los botones de categoría se generarán aquí -->
+            </div>
+            
+            <section class="contenedor-card">
+                <div id="loading">Cargando...</div>
+                <div id="cards-container" style="display: contents;"></div>
+                <div id="error" style="display: none;"></div>
+                <div id="no-results" style="display: none;">No se encontraron usuarios.</div>
+            </section>
+        </div>
+
+        <!-- MODO 2: Detalle (Oculto inicialmente) -->
+        <div id="featured-layout" class="hidden">
+            <!-- Parte Superior -->
+            <div id="top-section">
+                <!-- Izquierda: Avatar Destacado -->
+                <div id="featured-spot"></div>
+
+                <!-- Derecha: Información -->
+                <div id="info-panel">
+                    <h1 id="info-name">Nombre</h1>
+                    <h2 id="info-role">Rol</h2>
+                    <p id="info-desc">Descripción...</p>
+                    <button id="back-btn" class="btn-secondary">← Volver a la galería</button>
+                </div>
+            </div>
+
+            <!-- Parte Inferior: Resto de Galería -->
+            <div id="bottom-gallery"></div>
+        </div>
+
+        <footer class="main-footer">
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>GET STARTED</h3>
+                    <ul>
+                        <li><a href="#">Empieza a contratar</a></li>
+                        <li><a href="#">Encuentra proyectos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Lo más visto</h3>
+                    <ul>
+                        <li><a href="#">Programadores freelance</a></li>
+                        <li><a href="#">Perfiles IA</a></li>
+                        <li><a href="#">Expertos en Marketing</a></li>
+                        <li><a href="#">Diseño UI/UX</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Shakers</h3>
+                    <ul>
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">Trabaja con nosotros</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub-footer">
+                <div class="sub-footer-links">
+                    <a href="#">Política de privacidad</a> / 
+                    <a href="#">Política de Cookies</a> / 
+                    <a href="#">Términos y condiciones</a> / 
+                    <a href="#">Aviso Legal</a> / 
+                    <a href="#">Mapa del Sitio</a>
+                </div>
+                <div class="sub-footer-logo">AUTONONIX</div>
+                <div class="sub-footer-copy">© 2025 All rights reserved</div>
+                <div class="sub-footer-social">FB / IG / LI / XK</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="register-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn">×</button>
+            <form id="registroForm" class="card-body registro-form" method="POST" action="php/registrar_usuario.php"
+            enctype="multipart/form-data">
+
+            <div class="card registro-card" style="border: none; box-shadow: none;">
+                <div class="card-header">
+                    <div class="avatar-upload">
+                        <div id="avatarPreview" class="avatar-preview">
+                            <span id="avatarPlus">+</span>
+                        </div>
+                        <input type="file" id="avatarInput" name="avatar2D" accept="image/*" hidden>
+                    </div>
+                    <div class="card-header-info">
+                        <h2>Nuevo perfil</h2>
+                        <div class="card-location">Crea un nuevo autónomo en el catálogo</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <input type="text" name="nombre" placeholder="Nombre completo" required autocomplete="name">
+                    <select name="sexo" autocomplete="sex">
+                        <option value="female">Mujer</option>
+                        <option value="male">Hombre</option>
+                    </select>
+                    <input type="email" name="email" placeholder="Email" required autocomplete="email">
+                </div>
+
+                <div class="form-row">
+                    <input type="text" name="ciudad" placeholder="Ciudad" autocomplete="address-level2">
+                    <input type="text" name="provincia" placeholder="Provincia" autocomplete="address-level1">
+                </div>
+
+                <div class="form-row">
+                    <select name="modalidad" autocomplete="off">
+                        <option value="online">Online</option>
+                        <option value="presencial">Presencial</option>
+                        <option value="mixto">Mixto</option>
+                    </select>
+                    <input type="text" name="enlaces" placeholder="Portfolio / links a trabajos" autocomplete="url">
+                </div>
+
+                <textarea name="descripcion" placeholder="Descripción profesional" autocomplete="off"></textarea>
+
+                <div class="card-section">
+                    <div class="card-section-title">Skills</div>
+                    <div id="skills-list" class="checkbox-grid"></div>
+                    <input type="text" id="new-skill" placeholder="Añadir nueva skill">
+                </div>
+
+                <div class="card-section">
+                    <div class="card-section-title">Categorías</div>
+                    <div id="categories-list" class="checkbox-grid"></div>
+                    <input type="text" id="new-category" placeholder="Añadir nueva categoría">
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Registrar autónomo</button>
+                </div>
+            </div>
+        </form>
+        <div id="registroMensaje"></div>
+        </div>
+    </div>
+
+    <!-- Import map para Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Script principal -->
+    <script type="module" src="js/script.js"></script>
+</body>
+
+</html>
