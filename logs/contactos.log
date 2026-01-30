@@ -43,3 +43,12 @@
 [2026-01-28 12:50:26] ✓ Email enviado con PHPMailer a brea00jorge@gmail.com
 [2026-01-28 12:50:26] ✓✓ ÉXITO: Contacto procesado correctamente
 [2026-01-28 12:50:26] ══════════════════════════════════════════
+[2026-01-28 12:58:28] ══════════════════════════════════════════
+[2026-01-28 12:58:28] ➜ INICIO: Procesando contacto de pepe@gmail.es a acollazocacho@gmail.com
+[2026-01-28 12:58:28] 📧 Intentando enviar con mail() a: acollazocacho@gmail.com
+[2026-01-28 12:58:30] ✗ mail() falló para acollazocacho@gmail.com
+[2026-01-28 12:58:30] ⤳ mail() falló. Intentando con PHPMailer...
+[2026-01-28 12:58:30] 📧 Intentando enviar con PHPMailer a: acollazocacho@gmail.com
+[2026-01-28 12:58:31] ✓ Email enviado con PHPMailer a acollazocacho@gmail.com
+[2026-01-28 12:58:31] ✓✓ ÉXITO: Contacto procesado correctamente
+[2026-01-28 12:58:31] ══════════════════════════════════════════
