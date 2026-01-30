@@ -29,10 +29,6 @@ body {
     text-transform: uppercase;
 }
 
-button {
-    background:none;
-}
-
 /* HEADER */
 .main-header {
     background: var(--color-tarjeta-titulo);
@@ -60,6 +56,11 @@ button {
     padding: 8px;
     font-family: inherit;
     font-size: 20px;
+}
+
+.search-button {
+    background:transparent;
+    cursor: pointer;
 }
 
 .user-pill {
