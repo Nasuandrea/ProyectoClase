@@ -64,17 +64,15 @@
     </a>
    </div>
 <!-- contenedor general de las cards -->
-   <div class="con">
+<div class="containerAvatar3d">
     <button id="botonCerrar">X</button>
 <!-- primer contenedor back-end -->
-     <div class="contenedor1"></div>
-     <!-- segundo contenedor frontEnd -->
-     <div class="contenedor1"></div> 
-     <!-- contenedor skills -->
-     <div class="contenedor1"></div>
-     <!-- contenedor de descripcion -->
-     <div class="contenedor1"></div>
-   </div>
+<div class="contenedorAvatar"></div>  
+<!-- contenedor de descripcion -->   
+<div class="contenedor1"></div>
+     
+     
+</div>
 </div>
 <script>
     const boton = document.getElementById("boton");
@@ -85,7 +83,7 @@
     });
 
     function evento1(){
-        const mostrar = document.querySelector(".con");
+        const mostrar = document.querySelector(".containerAvatar3d");
         if (mostrar.style.display === "flex"){
             mostrar.style.display = "none";
         } else {
@@ -109,7 +107,7 @@
  });
    
     function cerrarModal(){
-        const cerrar = document.querySelector(".con");
+        const cerrar = document.querySelector(".containerAvatar3d");
         const abrir = document.querySelector(".avatar-container");
 
         if (cerrar.style.display ==="flex"){
@@ -130,34 +128,6 @@
 
 
 
-    // function mostrar() {
-    //     const con = document.querySelector('.con');
-       
-    //     if (con.style.display === 'flex') {
-    //         con.style.display = 'none'; 
-    //     } else {
-    //         con.style.display = 'flex';
-           
-           
-    //         const contenedores = document.querySelectorAll('.contenedor1');
-    //         contenedores.forEach((elemento, index) => {
-    //             elemento.style.animationDelay = `${(index + 1) * 0.3}s`;
-               
-    //             elemento.style.animation = 'none';
-    //             setTimeout(() => {
-    //                 elemento.style.animation = `con1 1s forwards ${(index + 1) * 0.3}s`;
-    //             }, 10);
-    //         });
-    //     }
-    // }
-    //   function toggleImagen() {
-    //     const img = document.querySelector('.img');
-    //     if (img.style.display === 'block') {
-    //         img.style.display = 'none';
-    //     } else {
-    //         img.style.display = 'block';
-    //     }
-    // }
 
 
     // animacion 
