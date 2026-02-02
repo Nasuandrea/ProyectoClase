@@ -1,0 +1,44 @@
++-----------------------------------------------------------------------+
+|                        N A V E G A D O R   (Cliente)                  |
++-----------------------------------------------------------------------+
+|                                                                       |
+|  [ index.html ]                                                       |
+|  │                                                                    |
+|  ├── <head>                                                           |
+|  │    ├── style.css (Estilos RPG/Pixel Art)                           |
+|  │    └── <model-viewer> (Librería de Google para el 3D)              |
+|  │                                                                    |
+|  ├── <body>                                                           |
+|  │    ├── <HEADER> (Logo, Buscador: #search)                          |
+|  │    ├── <NAV> (Categorías: #categories-container)                   |
+|  │    │                                                               |
+|  │    ├── <MAIN>                                                      |
+|  │    │    └── #cards-container (Aquí JS inyecta las tarjetas)        |
+|  │    │         ├── <article class="character-card">                  |
+|  │    │         │    ├── <img> (Avatar 2D - Carga inicial)            |
+|  │    │         │    ├── <model-viewer> (Avatar 3D - Hover)           |
+|  │    │         │    └── <button> Contactar (Abre Modal)              |
+|  │    │         └─────────────────────────────────────────────────────|
+|  │    │                                                               |
+|  │    ├── <MODAL #modal-contacto> (Oculto por defecto)                |
+|  │    │    └── <form #form-contacto>                                  |
+|  │    │         ├── Input Oculto: email_destinatario                  |
+|  │    │         └── Inputs Visibles: Nombre, Email, Mensaje           |
+|  │    │                                                               |
+|  │    └── <FOOTER>                                                    |
+|  │                                                                    |
+|  └── <SCIPTS>                                                         |
+|       ├── script.js (Trae datos de PHP y pinta el Grid 2D/3D)         |
+|       └── modal_contacto.js (Maneja la lógica del formulario)         |
+|                                                                       |
++-----------------------------------↕-----------------------------------+
+                                    ↕ (AJAX / Fetch)
++-----------------------------------------------------------------------+
+|                        S E R V I D O R   (Backend)                    |
++-----------------------------------------------------------------------+
+|  1. obtener_usuarios.php  ← Devuelve JSON con lista y rutas .glb      |
+|  2. obtener_categorias.php ← Devuelve JSON para botones de filtro     |
+|  3. obtener_info.php      ← Devuelve detalles para el Modal           |
+|  4. enviar_contacto.php   ← Recibe el Form y envía el Email (SMTP)    |
+|  5. registrar_usuario.php ← Recibe nuevos registros con archivos 3D   |
++-----------------------------------------------------------------------+

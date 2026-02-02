@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta básicos: codificación, responsive y SEO -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Descripción y autoría -->
+    <meta name="description" content="Autonomix - Catálogo de profesionales con identidad propia">
+    <meta name="author" content="Equipo Autonomix">
+    
+    <title>AUTONOMIX | Profesionales 3D</title>
+
+    <!-- Fuente estilo pixel/RPG (REVISAR CON EQUIPO CSS) -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    
+    <!-- CSS principal REVISAR (tarjetas, modal, grid, hover 2D/3D, etc.) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Model Viewer (Google): habilita la etiqueta <model-viewer> para mostrar .glb // REVISAR con EQUIPO 3D-->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+
+<body>
+
+    <!-- HEADER: identidad + buscador + acceso a login/registro -->
+    <header class="main-header">
+
+        <!-- Logo(provisional): vuelve a HOME -->
+        <div class="logo-section">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <span class="logo-icon">🐱</span>
+                <span class="brand-name">AUTONOMIX</span>
+            </a>
+        </div>
+
+        <!-- BUSCADOR:
+             - input con id="search" (punto de anclaje para JS)
+             - botón llama a filtrarUsuarios() (definido en script.js) -->
+        <div class="search-container">
+            <input
+                type="text"
+                id="search"
+                class="pill-search"
+                placeholder="BUSCAR TALENTO (NOMBRE, CIUDAD)..."
+            >
+            <button class="search-btn" onclick="filtrarUsuarios()">🔍</button>
+        </div>
+
+        <!-- LOGIN / REGISTRO: ahora apunta a registro.html -->
+        <div class="auth-section">
+            <a href="registro.html" class="user-pill">LOGIN / REGISTRO</a>
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- HERO: texto de bienvenida / branding (Los textos son provisionales)-->
+        <section class="hero-section">
+            <div class="hero-box">
+                <h1>PROFESIONALES CON IDENTIDAD PROPIA</h1>
+                <p class="slogan">Explora un universo de talento seleccionado por su nivel y cercanía.</p>
+            </div>
+        </section>
+
+        <!-- CATEGORÍAS (NAV):
+             - id="categories-container":aquí JS inyecta botones de categorías
+             - de inicio solo hay "TODOS" y luego JS añade más -->
+        <nav id="categories-container" class="categories-grid">
+            <button class="cat-btn active" onclick="filtrarPorCategoria('all')">TODOS</button>
+        </nav>
+
+        <!-- CONTENEDOR del catálogo / roster -->
+        <section class="container-roster">
+            
+            <!-- Loading inicial:
+                 - JS lo muestra mientras espera la respuesta del backend
+                 - luego lo oculta al renderizar tarjetas -->
+            <div id="loading" class="loading-spinner">
+                <p>Cargando catálogo...</p>
+            </div>
+
+            <!-- GRID de tarjetas:
+                 - id="cards-container":script.js inyecta <article class="character-card"> por usuario -->
+            <div id="cards-container" class="cards-grid">
+                <!-- Vacío: se llena dinámicamente con JS -->
+            </div>
+
+            <!-- Mensaje cuando no hay resultados tras filtrar/buscar -->
+            <div id="no-results" style="display: none; text-align: center; width: 100%;">
+                <p>No se encontraron profesionales con esos criterios.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE CONTACTO (oculto por defecto):
+         - id="modal-contacto": modal_contacto.js lo activa/desactiva
+         - el formulario se envía por JS (AJAX) a enviar_contacto.php -->
+    <div id="modal-contacto" class="modal-overlay">
+        <div class="modal-container">
+
+            <!-- Botón cerrar modal -->
+            <button class="modal-close" onclick="cerrarModalContacto()">&times;</button>
+            
+            <!-- Encabezado del modal: se actualiza con el nombre del destinatario // Textos provisionales (Sustituir "iniciar mision")-->
+            <div class="modal-header">
+                <h2>INICIAR MISIÓN</h2>
+                <p>Contactando con: <strong id="nombre-destinatario">...</strong></p>
+            </div>
+
+            <!-- Formulario:
+                 - id="form-contacto": engancha el submit por JS
+                 - incluye input hidden con el email del destinatario (rellenado por JS) 
+                 - Sustituir los textos de los ejemplos -->
+            <form id="form-contacto" class="modal-form">
+                <input type="hidden" id="email-destinatario" name="email_destinatario">
+
+                <div class="form-group">
+                    <label>TU NOMBRE:</label>
+                    <input type="text" name="nombre_remitente" required placeholder="Ej: Reclutador Nvl. 1">
+                </div>
+
+                <div class="form-group">
+                    <label>TU EMAIL:</label>
+                    <input type="email" name="email_remitente" required placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label>ASUNTO:</label>
+                    <input type="text" name="asunto" required placeholder="Propuesta de proyecto...">
+                </div>
+
+                <div class="form-group">
+                    <label>MENSAJE:</label>
+                    <textarea name="mensaje" required rows="5" placeholder="Describe la misión..."></textarea>
+                </div>
+
+                <!-- Zona para mensajes de estado (ok/error) tras enviar -->
+                <div id="mensaje-respuesta" class="mensaje-respuesta"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalContacto()">CANCELAR</button>
+
+                    <!-- type="submit": modal_contacto.js intercepta el submit y hace envío AJAX // Sustiuir textos  -->
+                    <button type="submit" class="btn-submit" id="btn-enviar">ENVIAR LECHUZA 🦉</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER:
+         - enlaces de redes / legal todavía con href="#"
+         - flecha ↑:debería enlazar a #top o hacer scrollTo arriba -->
+    <footer class="footer-info">
+        <section class="footer-content">
+            <div class="footer-section-redes">
+                <div class="footer-social">
+                    <span>
+                        <a href="#">FB</a> / <a href="#">TW</a> / <a href="#">IG</a>
+                    </span>
+                    <div class="footer-legal"> 
+                        <span><a href="#">LEGAL</a> | <a href="#">CONTACTO</a></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-copy">
+                &copy; 2025 AUTONOMIX
+            </div>
+
+            <div class="footer-nav">
+                <a href="#" class="up-arrow" title="Subir al cielo">↑</a>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JS del modal: abrir/cerrar + pedir info destinatario + enviar formulario por AJAX -->
+    <script src="modal_contacto.js"></script>
+    
+    <!-- JS principal: carga categorías + carga usuarios + pinta tarjetas + filtra por búsqueda/categoría -->
+    <script src="script.js"></script>
+
+</body>
+</html>
