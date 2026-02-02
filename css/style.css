@@ -39,6 +39,10 @@ body {
     padding: 10px 40px;
 }
 
+.logo-section a {
+    text-decoration: none;
+}
+
 .brand-name {
     font-size: 40px;
     font-weight: bold;
@@ -61,6 +65,11 @@ body {
 .search-button {
     background:transparent;
     cursor: pointer;
+    border: none;
+}
+
+.auth-section a {
+    text-decoration: none;
 }
 
 .user-pill {
