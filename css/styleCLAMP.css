@@ -1,0 +1,349 @@
+:root {
+    
+    --color-principal: #B0DFB7;
+    --color-secundario: #F3E1E4;
+    --color-sombra: #75977A;
+    --color-tarjeta-titulo: #1F2933;
+    --color-negro: #000;
+    --color-blanco: #FFF;
+
+    --borde: 4px solid;
+
+    /* Fuente adaptable ( tamaño mínimo, viewport, tamaño máximo) */
+    --fuente-base: clamp(14px, 2vw, 18px);
+    --fuente-header: clamp(20px, 3vw, 40px);
+    --fuente-titulo: clamp(24px, 4vw, 48px);
+    --fuente-card: clamp(16px, 2vw, 20px);
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    image-rendering: pixelated;
+}
+
+body {
+    background-color: var(--color-secundario);
+    font-family: 'VT323', monospace;
+    text-transform: uppercase;
+    font-size: var(--fuente-base);
+}
+
+/* HEADER */
+
+.main-header {
+    background: var(--color-tarjeta-titulo);
+    border-bottom: var(--borde) var(--color-tarjeta-titulo);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 20px;
+}
+
+.brand-name,
+.slogan-name {
+    font-size: var(--fuente-header);
+    font-weight: bold;
+    color: var(--color-principal);
+}
+
+.pill-search {
+    border: var(--borde) var(--color-tarjeta-titulo);
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 1em;
+    width: 100%;
+    max-width: 250px;
+}
+
+.search-button {
+    background: transparent;
+    cursor: pointer;
+}
+
+.user-pill {
+    font-size: 1em;
+    font-weight: bold;
+    color: var(--color-principal);
+}
+
+/* HERO */
+
+.hero-gaming {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-box {
+    width: 100%;
+    max-width: 700px;
+}
+
+.hero-gaming h1 {
+    font-size: var(--fuente-titulo);
+    color: var(--color-tarjeta-titulo);
+    background: var(--color-blanco);
+    padding: 15px;
+    border: var(--borde) var(--color-negro);
+    box-shadow: 8px 8px 0 var(--color-sombra);
+}
+
+/* CATEGORÍAS 6x2 */
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.cat-btn {
+    background: var(--color-principal);
+    border: var(--borde) var(--color-tarjeta-titulo);
+    padding: 12px;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    color: var(--color-tarjeta-titulo);
+}
+
+.cat-btn:hover {
+    background: var(--color-tarjeta-titulo);
+    color: var(--color-blanco);
+}
+
+.cat-btn:active {
+    transform: translateY(4px);
+}
+
+/* CARDS 4x3 */
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.character-card {
+    background: var(--color-negro);
+    border: var(--borde) var(--color-negro);
+    box-shadow: 10px 10px 0 var(--color-sombra);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    color: var(--color-blanco);
+    font-size: var(--fuente-card);
+    text-align: center;
+    padding: 10px;
+}
+
+.card-header h3 {
+    font-weight: normal;
+}
+
+.player-badge {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+}
+
+.avatar-silhouette {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 240 / 276;
+    background-image: url(../img/usuario.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-footer-info {
+    padding: 15px;
+    background-color: var(--color-principal);
+    border-top: var(--borde) var(--color-negro);
+    text-align: center;
+    font-size: var(--fuente-card);
+}
+
+/* FOOTER */
+
+.first-footer,
+.second-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+}
+
+.first-footer {
+    background-color: var(--color-sombra);
+}
+
+.first-footer a {
+    color: var(--color-tarjeta-titulo);
+    text-decoration: none;
+}
+
+.submenu-first-footer a {
+    text-transform: none;
+}
+
+.second-footer {
+    background-color: var(--color-tarjeta-titulo);
+    color: var(--color-blanco);
+}
+
+.third-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-secundario);
+    font-size: clamp(60px, 10vw, 150px);
+    padding: 40px 0;
+}
+
+/* TAMAÑOS PANTALLA */
+
+
+
+@media (min-width: 768px) {
+    .pill-search {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .first-footer,
+    .second-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (min-width: 954px) {
+    .categories-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (min-width: 1440px) {
+
+    /* =========================
+       CONTENEDORES GENERALES
+    ========================= */
+    body {
+        font-size: 18px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+    .main-header {
+        padding: 20px 80px;
+    }
+
+    .brand-name,
+    .slogan-name {
+        font-size: 48px;
+    }
+
+    .pill-search {
+        max-width: 320px;
+        font-size: 20px;
+        padding: 10px 14px;
+    }
+
+    .user-pill {
+        font-size: 20px;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+    .hero-gaming {
+        min-height: 320px;
+    }
+
+    .hero-box {
+        max-width: 900px;
+    }
+
+    .hero-gaming h1 {
+        font-size: 56px;
+        padding: 25px;
+        box-shadow: 12px 12px 0 var(--color-sombra);
+    }
+
+    /* =========================
+       CATEGORÍAS
+    ========================= */
+    .categories-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+        gap: 20px;
+        padding: 40px 60px;
+    }
+
+    .cat-btn {
+        font-size: 20px;
+        padding: 18px;
+    }
+
+    /* =========================
+       ROSTER / CARDS
+    ========================= */
+    .roster-grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1600px;
+        gap: 50px;
+        padding: 60px;
+    }
+
+    .character-card {
+        box-shadow: 14px 14px 0 var(--color-sombra);
+    }
+
+    .card-header {
+        font-size: 22px;
+        padding: 15px;
+    }
+
+    .avatar-silhouette {
+        max-width: 280px;
+    }
+
+    .card-footer-info {
+        font-size: 20px;
+        padding: 20px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+    .first-footer,
+    .second-footer {
+        padding: 40px 80px;
+        font-size: 20px;
+    }
+
+    .third-footer {
+        font-size: 180px;
+        padding: 80px 0;
+    }
+}
