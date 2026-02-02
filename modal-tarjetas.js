@@ -25,7 +25,7 @@ const boton = document.getElementById("boton");
     }
 
  const botonCerrar = document.querySelector("#botonCerrar");
- botonCerrar.addEventListener("click", ()=>{
+ botonCerrar.addEventListener("click", () => {
     cerrarModal();
  });
    

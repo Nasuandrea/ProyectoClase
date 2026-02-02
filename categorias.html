@@ -27,6 +27,36 @@
       margin: 16px;
       box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
     }
+    .level-bars {
+    display: flex;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.level-bars span {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: #ddd;
+}
+
+.level-bars span.active {
+    background: #4caf50;
+}
+.barras-container {
+    display: flex;
+    gap: 2px;
+}
+
+.barra {
+    width: 20px;
+    height: 8px;
+    background: #ccc; /* barra vacía */
+}
+
+.barra.rellena {
+    background: #4caf50; /* barra rellena */
+}
   </style>
   <body>
     <!-- crear un js para multiplicar categorias al recibir 1 
@@ -72,6 +102,61 @@
           noResults.style.display = "none";
         }
       }
+      // funcion para informacion de usuarios
+function verInfoUsuario(id) {
+  const container = document.getElementById("cards-container");
+  if (!container) return;
+
+  fetch(`obtener_info.php?id=${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success) throw new Error(data.error || "Error desconocido");
+
+      const usuario = data.data;
+
+      // Generamos una "tarjeta detallada"
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const skillsHTML =
+        usuario.skills.length > 0
+          ? usuario.skills
+              .map((skill) => `<span class="tag">${skill}</span>`)
+              .join("")
+          : '<span class="tag">Sin skills</span>';
+
+      const categoriasHTML =
+        usuario.categorias.length > 0
+          ? usuario.categorias
+              .map((cat) => `<span class="tag category">${cat}</span>`)
+              .join("")
+          : '<span class="tag category">Sin categoría</span>';
+
+      card.innerHTML = `
+      // seleccionar div que contiene todo lo de la tarjeta
+                    <div class="card-header-info">
+                        <h2>${usuario.nombre}</h2>
+                        // <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}</div>
+                    </div>
+
+                    <div class="card-section">
+                        <div class="card-section-title">Nivel Backend</div>
+                        ${renderBarras(Number(usuario.backend))}
+                    </div>
+
+                    <div class="card-section">
+                        <div class="card-section-title">Nivel Frontend</div>
+                        ${renderBarras(Number(usuario.frontend))}
+                    </div>
+      `;
+
+ // Reemplaza la tarjeta anterior
+      container.innerHTML = "";
+      container.appendChild(card);
+    })
+    .catch((error) => console.error("Error al obtener info:", error));
+}
+
 
       // Función principal para cargar usuarios
       async function cargarUsuarios() {
@@ -151,27 +236,97 @@
             <div class="avatar-container">
                 <button id="boton">
                     <h3>${usuario.nombre}</h3>
-                    <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+                    <img src="${usuario.avatar3D}" alt="Avatar de ${usuario.nombre}">
                     <p>Especialización: ${usuario.especializacion}</p>
                 </button>
             </div>
+            
             <!-- contenedor general de las cards -->
             <div class="containerAvatar3d">
                 <button id="botonCerrar">X</button>
-            <!-- primer contenedor back-end -->
-                <div class="contenedor1"></div>
-            <!-- segundo contenedor frontEnd -->
-                <div class="contenedor1"></div> 
-            <!-- contenedor skills -->
-                <div class="contenedor1"></div>
-            <!-- contenedor de descripcion -->
-                <div class="contenedor1"></div>
+                <div class ="card-header-info" >
+                // contiene el avatar 3d y el nombre del usuario
+                </div>
+                <div class id="cards-container">
+                  //contiene la informacion detallada del usuario 
+                </div>
+                <div class="card-header-info">
+                        <h2>${usuario.nombre}</h2>
+                        // <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}</div>
+                    </div>
+
+                    <div class="card-section">
+                        <div class="card-section-title">Nivel Backend</div>
+                        ${renderBarras(Number(usuario.backend))}
+                    </div>
+
+                    <div class="card-section">
+                        <div class="card-section-title">Nivel Frontend</div>
+                        ${renderBarras(Number(usuario.frontend))}
+                    </div>
+            
             </div>
         </div>
         `;
           contenedorCard.appendChild(card);
         });
       }
+
+function renderBarras(nivel) {
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    html += `<span class="barra ${i <= nivel ? "rellena" : ""}"></span>`;
+  }
+  return `<div class="barras-container">${html}</div>`;
+}
+
+// ============================
+// CARGA DE SKILLS Y CATEGORÍAS PARA EL FORMULARIO
+// ============================
+async function cargarSkillsYCategorias() {
+  const skillsDiv = document.getElementById("skills-list");
+  const catsDiv = document.getElementById("categories-list");
+  if (!skillsDiv || !catsDiv) return;
+
+  try {
+    const skillsRes = await fetch("obtener_skills.php");
+    const skills = await skillsRes.json();
+
+    const catsRes = await fetch("obtener_categorias.php");
+    const cats = await catsRes.json();
+
+    skillsDiv.innerHTML = "";
+    catsDiv.innerHTML = "";
+
+    skills.forEach((s) => {
+      skillsDiv.innerHTML += `
+                <label>
+                    <input type="checkbox" name="skills[]" value="${s.nombre}">
+                    <span>${s.nombre}</span>
+                </label>
+            `;
+    });
+
+    cats.forEach((c) => {
+      catsDiv.innerHTML += `
+                <label>
+                    <input type="checkbox" name="categorias[]" value="${c.nombre}">
+                    <span>${c.nombre}</span>
+                </label>
+            `;
+    });
+  } catch (error) {
+    console.error("Error cargando skills o categorías:", error);
+  }
+}
+
+
+
+
+
+
+
+
 
       //funcion de categorias y filtro por categorias
 

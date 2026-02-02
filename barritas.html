@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <script>
+            function crearCard(usuario) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const iniciales = obtenerIniciales(usuario.nombre);
+
+  const skillsHTML =
+    usuario.skills.length > 0
+      ? usuario.skills
+          .map((skill) => `<span class="tag">${skill}</span>`)
+          .join("")
+      : '<span class="tag">Sin skills</span>';
+
+  const categoriasHTML =
+    usuario.categorias.length > 0
+      ? usuario.categorias
+          .map((cat) => `<span class="tag category">${cat}</span>`)
+          .join("")
+      : '<span class="tag category">Sin categoría</span>';
+
+  const modalidadClass = `modalidad-${usuario.modalidad}`;
+
+  card.innerHTML = `
+        <div class="card-header">
+            <div class="card-avatar"><img src= "${usuario.avatar2D}" alt="${iniciales}"></div>
+            <div class="card-header-info">
+                <h2>${usuario.nombre}</h2>
+                <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}</div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <p class="card-description">${usuario.descripcion || "Desarrollador profesional"}</p>
+
+            <div class="card-section">
+                <div class="card-section-title">Modalidad</div>
+                <span class="modalidad-badge ${modalidadClass}">${usuario.modalidad}</span>
+            </div>
+
+            <div class="card-section">
+                <div class="card-section-title">Habilidades</div>
+                <div class="tags">
+                    ${skillsHTML}
+                </div>
+            </div>
+
+            <div class="card-section">
+                <div class="card-section-title">Especialización</div>
+                <div class="tags">
+                    ${categoriasHTML}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <a href="${usuario.enlaces}" target="_blank" class="btn btn-primary">
+                Ver Portfolio
+            </a>
+            <button class="btn btn-secondary" onclick="contactar(${usuario.id})">
+            Contactar
+            </button> 
+            <button class="btn btn-secondary" onclick="editarUsuario(${usuario.id})">
+                Editar
+            </button>
+            <button class="btn btn-secondary" onclick="verInfoUsuario(${usuario.id})">Ver más</button>
+            <button class="btn btn-danger" onclick="eliminarUsuario(${usuario.id}, '${usuario.nombre}')">
+                🗑
+            </button>
+        </div>
+    `;
+
+  return card;
+}
+
+function obtenerIniciales(nombre) {
+  const partes = nombre.split(" ");
+  if (partes.length >= 2) {
+    return partes[0][0] + partes[1][0];
+  }
+  return nombre.substring(0, 2).toUpperCase();
+}
+
+function editarUsuario(id) {
+  window.location.href = `editar_usuario.html?id=${id}`;
+}
+
+function eliminarUsuario(id, nombre) {
+  if (
+    confirm(
+      `¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`,
+    )
+  ) {
+    const formData = new FormData();
+    formData.append("id", id);
+
+    fetch("eliminar_usuario.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Usuario eliminado correctamente");
+          cargarUsuarios(); // Recargar la lista de usuarios
+        } else {
+          alert("Error al eliminar: " + (data.error || "Error desconocido"));
+        }
+      })
+      .catch((error) => {
+        alert("Error al eliminar: " + error.message);
+        console.error("Error:", error);
+      });
+  }
+}
+        </script>
+    </div>
+</body>
+</html>
