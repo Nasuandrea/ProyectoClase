@@ -57,6 +57,60 @@
 .barra.rellena {
     background: #4caf50; /* barra rellena */
 }
+
+  /* mantener los display */
+    .avatar-container{
+        width: 300px;
+        height: 200px;
+        margin-bottom: 20px;
+        display: block;
+    }
+    .con {
+        display: none;
+        gap: 10px;
+    }
+   
+    .container {
+        width: 300px;
+        height: 200px;
+        cursor: pointer;
+    }
+   
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .contenedor1 {
+        display: flex;
+        margin: 40px auto;
+        width: 50%;
+        background: red;
+        height: 300px;
+        /* mantener la parte lo que pertenece a la animacion */
+        scale: 0;
+        animation-name: con1;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes con1 {
+        0% {
+            scale: 0;
+        }
+        100% {
+            scale: 1;
+        }
+    }
+
+
+
+
+
+
+
   </style>
   <body>
     <!-- crear un js para multiplicar categorias al recibir 1 
@@ -228,17 +282,22 @@ function verInfoUsuario(id) {
           // faltaria incluile las clases de css que necesiten
           //incluir el contenido de modal-tarjetas.html dentro. 
           card.innerHTML = `
-        <h3>${usuario.nombre}</h3>
-        <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
-        <p>Profesión: ${usuario.especializacion}</p>
-        
+          // contenedor general de la card
         <div id="mainGrid">
-            <div class="avatar-container">
-                <button id="boton">
+          // contenedor avatar 2d
+          <div class="avatar-container" onclick="$boton">
+            <h3>${usuario.nombre}</h3>
+            <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+            <p>Profesión: ${usuario.especializacion}</p>
+        </div>
+        
+        // contenedor avatar 3d y skills
+            <div class="avatar-container containerAvatar3d">
+                // <button id="boton">
                     <h3>${usuario.nombre}</h3>
                     <img src="${usuario.avatar3D}" alt="Avatar de ${usuario.nombre}">
                     <p>Especialización: ${usuario.especializacion}</p>
-                </button>
+                // </button>
             </div>
             
             <!-- contenedor general de las cards -->
@@ -273,8 +332,8 @@ function verInfoUsuario(id) {
                 <div>${usuario.descripcion}</div>
                 <div>${usuario.enlaces}</div>
                 <div class="card-section">
-                //<div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
-                //<button>contacto</button>
+                <--<div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}-->
+                <button>contacto</button>
                 </div>
             
             </div>
@@ -381,5 +440,6 @@ async function cargarSkillsYCategorias() {
         generarCards(usuariosFiltrados);
       }
     </script>
+    <script>src="modal-tarjetas.js"</script>
   </body>
 </html>
