@@ -243,27 +243,39 @@ function verInfoUsuario(id) {
             
             <!-- contenedor general de las cards -->
             <div class="containerAvatar3d">
-                <button id="botonCerrar">X</button>
-                <div class ="card-header-info" >
-                // contiene el avatar 3d y el nombre del usuario
-                </div>
+                
+              <div class ="card-header-info" >
+                  //usuario contiene skills y categorias
+                <span>titulo</span>
+               
+                
+              </div>
                 <div class id="cards-container">
                   //contiene la informacion detallada del usuario 
                 </div>
                 <div class="card-header-info">
-                        <h2>${usuario.nombre}</h2>
-                        // <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}</div>
-                    </div>
+                  
+                        <h2>info</h2>
+                        <button id="botonCerrar">X</button>
+                        // </div>
 
-                    <div class="card-section">
+                </div>
+
+                <div class="card-section">
                         <div class="card-section-title">Nivel Backend</div>
                         ${renderBarras(Number(usuario.backend))}
-                    </div>
+                </div>
 
-                    <div class="card-section">
+                <div class="card-section">
                         <div class="card-section-title">Nivel Frontend</div>
                         ${renderBarras(Number(usuario.frontend))}
-                    </div>
+                </div>
+                <div>${usuario.descripcion}</div>
+                <div>${usuario.enlaces}</div>
+                <div class="card-section">
+                //<div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
+                //<button>contacto</button>
+                </div>
             
             </div>
         </div>
