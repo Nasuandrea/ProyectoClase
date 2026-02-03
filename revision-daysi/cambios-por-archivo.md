@@ -1,6 +1,6 @@
-# 📋 Resumen de Cambios por Archivo
+#  Resumen de Cambios por Archivo
 
-## **🗂️ categorias.html**
+## **categorias.html**
 - **Agregada barra de búsqueda** completa con input y contenedor
 - **Corregidos IDs inválidos**: `onclick="$boton"` → `id="boton"`, `id="#"` → `id="cards-container"`
 - **Añadido HTML del modal** con estructura completa
@@ -9,7 +9,7 @@
 
 ---
 
-## **⚡ modal-tarjetas.js**
+## ** modal-tarjetas.js**
 - **Creada función [setupModalButtons()](cci:1://file:///c:/wamp64/www/ProyectoClase-frontend-js/modal-tarjetas.js:0:0-31:1)** para configurar botones dinámicos
 - **Modificado event listener** para manejar botones creados después de DOMContentLoaded
 - **Agregado logging extensivo** para depuración
@@ -20,7 +20,7 @@
 
 ---
 
-## **📇 cargar-tarjetas-prueba.js**
+## **cargar-tarjetas-prueba.js**
 - **Cambiado [window.onload](cci:1://file:///c:/wamp64/www/ProyectoClase-frontend-js/cargar-tarjetas-prueba.js:217:6-219:8) → `DOMContentLoaded`** para evitar conflictos
 - **Simplificada función [generarCards()](cci:1://file:///c:/wamp64/www/ProyectoClase-frontend-js/cargar-tarjetas-prueba.js:118:6-143:7)** - Ahora crea cards simples con botón "Ver más"
 - **Agregado botón "Ver más"** con `data-usuario` JSON
@@ -31,20 +31,20 @@
 
 ---
 
-## **🔍 barra-busqueda.js**
+## **barra-busqueda.js**
 - **Actualizado placeholder.jpg → SVG** 100x100px
 - **Mantenido funcionamiento original** de búsqueda en tiempo real
 - **Manejo de errores** para imágenes faltantes
 
 ---
 
-## **🗃️ Archivos Renombrados (.old)**
+## **Archivos Renombrados (.old)**
 - [categorias.js](cci:7://file:///c:/wamp64/www/ProyectoClase-frontend-js/categorias.js:0:0-0:0) → [categorias.js.old](cci:7://file:///c:/wamp64/www/ProyectoClase-frontend-js/categorias.js.old:0:0-0:0) (duplicado de cargar-tarjetas-prueba.js)
 - `flip-card.js` → [flip-card.js.old](cci:7://file:///c:/wamp64/www/ProyectoClase-frontend-js/flip-card.js.old:0:0-0:0) (no utilizado)
 
 ---
 
-## **🎯 Funcionalidades Clave Implementadas**
+## **Funcionalidades Clave Implementadas**
 
 ### **Sistema del Modal**
 - Botones dinámicos con event listeners
