@@ -37,6 +37,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
+    position: sticky;
+    top:0;
 }
 
 .logo-section a {
@@ -138,12 +140,15 @@ body {
 
 /* CARTAS VERTICALES (4 COLUMNAS) */
 .roster-grid {
+    height: 500px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     padding: 40px;
     max-width: 1200px;
     margin: 0 auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .character-card {

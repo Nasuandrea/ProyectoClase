@@ -1,0 +1,55 @@
+@media(max-width:576px){
+    .body{
+        font-size: var(--fuente-tarjeta-pequeña)
+    }
+
+    .main-header{
+        height: 60px;
+    }
+    span.brand-name{
+        margin-left: 80px;
+    }
+    .slogan-name{
+        display: none;
+    }
+    input{
+        display: none;
+    }
+    button.search-btn{
+        margin-right: 80px;
+        height: 24px;
+        width: 24px;
+    }
+
+    .user-pill{
+        display: none;
+    }
+    .hero-gaming{
+        box-shadow: none;
+        display: flex;
+        justify-content: center;
+    }
+    .hero-gaming h1{
+        height: 20px;
+        font-size: 20px; 
+        margin-top: -170px; 
+        background-color: red;
+        box-shadow: none;
+        
+    } 
+    .categories-grid{
+        display: none;
+    }
+    .roster-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 40px;
+        max-width: 393px;
+        margin: 0 auto;
+    }
+
+    .card-footer-info {
+        font-size: 12px;
+    }
+
+}
