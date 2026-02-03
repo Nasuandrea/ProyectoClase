@@ -28,10 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Filtrar usuarios por nombre o categorías
+            // Filtrar usuarios por nombre, categoría o skills
             const busquedaFiltrada = todosLosUsuarios.filter(usuario => 
                 usuario.nombre.toLowerCase().includes(texto) ||
-                (usuario.categorias && usuario.categorias.toString().toLowerCase().includes(texto))
+                (usuario.categorias && usuario.categorias.toString().toLowerCase().includes(texto)) ||
+                (usuario.skills && usuario.skills.toString().toLowerCase().includes(texto))
             );
             
             mostrarBusqueda(busquedaFiltrada);
@@ -62,4 +63,3 @@ function mostrarBusqueda(usuarios) {
 
 
 //falta revisar el nombre de las id/clases para que coincidan 
-// crear una funcion que cree contenedor de skills dentro de cards
