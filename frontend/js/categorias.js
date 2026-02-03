@@ -1,0 +1,123 @@
+// Variables globales
+let usuarios =[];
+
+// Función para mostrar mensajes
+function mostrarMensaje(tipo) {
+    const noResults = document.getElementById('no-results');
+    if (tipo === 'no-results') {
+        noResults.style.display = 'block';
+    } else {
+        noResults.style.display = 'none';
+    }
+}
+
+// Función principal para cargar usuarios
+async function cargarUsuarios() {
+    const loading = document.getElementById('loading');
+    const container = document.getElementById('cards-container');
+    const errorDiv = document.getElementById('error');
+    
+    try {
+        const response = await fetch('obtener_usuarios.php');
+        
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        
+        const resultado = await response.json();
+        
+        loading.style.display = 'none';
+        
+        if (resultado.success) {
+            usuarios = resultado.data;
+            
+            if (usuarios.length === 0) {
+                mostrarMensaje('no-results');
+            } else {
+                generarCards(usuarios);
+            }
+        } else {
+            throw new Error(resultado.error || 'Error desconocido');
+        }
+        
+    } catch (error) {
+        // estos estilos se generan dinamicamente y se tienen que mantener como esta aca
+        loading.style.display = 'none';
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = 'Error al cargar los usuarios: ' + error.message;
+        console.error('Error:', error);
+    }
+}
+
+    //recogida de datos desde un archivo json
+    // let obtenerDatos ;
+    // fetch(obtenerDatos)
+    // .then(response => response.json())
+let obtenerCategorias = 'obtener_categorias.php';
+let categorias = [];
+fetch(obtenerCategorias)
+    .then(response => response.json())
+    .then(data => {
+        categorias = data.map(cat => cat.nombre);
+        generarCategorias(categorias);
+    })
+    .catch(error => console.error('Error al cargar las categorías:', error));
+
+
+// const contenedorBoton = document.getElementById('contenedorBoton');
+
+//function generar cards automaticas
+
+//falta recoger el id desde el backend
+function generarCards(usuarios){
+    let contenedorCard = document.querySelector('.contenedor-card');
+    contenedorCard.innerHTML = '';
+    //recorrido del array usuarios
+    usuarios.forEach((usuario)=> {
+        let card = document.createElement('div');
+        card.classList.add('card');
+        // contenedor de lo que tiene dentro la card
+        // faltaria incluile las clases de css que necesiten
+        card.innerHTML = `
+        <h3>${usuario.nombre}</h3>
+        <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+        `;
+        contenedorCard.appendChild(card);
+    });
+}
+
+//funcion de categorias y filtro por categorias
+
+//añado contenido dinamico que variaria segun la estructura del boton
+
+function generarCategorias(categorias){
+    let contenerdorBoton = document.querySelector('.contenedor-boton-categorias');
+    contenerdorBoton.innerHTML = '';
+    // Botón para mostrar todas
+    let botonTodas = document.createElement('button');
+    botonTodas.classList.add('boton-categoria');
+    botonTodas.onclick = () => filtrarCategorias(null);
+    botonTodas.innerHTML = `<span class="nombre-categoria">Todas</span>`;
+    contenerdorBoton.appendChild(botonTodas);
+    //recorrer el array categorias y crear un boton por cada categoria  
+    categorias.forEach((categoria)=>{
+        let boton = document.createElement('button');
+        boton.classList.add('boton-categoria');
+        boton.onclick = () => filtrarCategorias(categoria);
+        boton.innerHTML = `<span class="nombre-categoria">${categoria}</span>`;
+        contenerdorBoton.appendChild(boton);
+    });
+
+}
+window.onload = function() {
+    cargarUsuarios();
+};
+
+function filtrarCategorias(categoriaSeleccionada) {
+    if (!categoriaSeleccionada) {  
+        generarCards(usuarios);
+        return;
+    } 
+        const usuariosFiltrados = usuarios.filter(usuario => usuario.categorias && usuario.categorias.includes(categoriaSeleccionada));
+        generarCards(usuariosFiltrados);
+}
