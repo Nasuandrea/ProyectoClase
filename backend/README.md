@@ -30,17 +30,7 @@ backend/
 - **Formato JSON**: Todas las respuestas se devuelven en formato JSON con UTF-8
 
 
-1. **Configurar la base de datos**
-   
-   Edita el archivo `api/conexion.php` con tus credenciales:
-   ```php
-   $host = "localhost";
-   $user = "tu_usuario";
-   $password = "tu_contraseña";
-   $database = "tu_base_de_datos";
-   ```
-
-2. **Estructura de la base de datos**
+1. **Estructura de la base de datos**
    
    La API espera las siguientes tablas principales:
    - `users` - Información de usuarios/profesionales
