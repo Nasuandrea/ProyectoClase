@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sql7815048`
 --
-
+-- Poner unique nombre de categorias, skills y email de usuarios
 -- --------------------------------------------------------
 
 --
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -56,7 +56,7 @@ CREATE TABLE `contact_requests` (
 
 CREATE TABLE `skills` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -68,7 +68,7 @@ CREATE TABLE `skills` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `enlaces` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci,
