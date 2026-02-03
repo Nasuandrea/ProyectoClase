@@ -147,7 +147,8 @@ body {
     padding: 40px;
     max-width: 1200px;
     margin: 0 auto;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .character-card {
