@@ -123,14 +123,14 @@ function verInfoUsuario(id) {
           // contenedor general de la card
         <div id="mainGrid">
           // contenedor avatar 2d
-          <div class="avatar-container" onclick="con">
+          <div class="con" onclick=()>
             <h3>${usuario.nombre}</h3>
             <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
             <p>Profesión: ${usuario.especializacion}</p>
         </div>
         
         // contenedor avatar 3d y skills
-            <div class="avatar-container containerAvatar3d">
+            <div class="avatar-container contenedor1">
                 // <button id="boton">
                     <h3>${usuario.nombre}</h3>
                     <img src="${usuario.avatar3D}" alt="Avatar de ${usuario.nombre}">
@@ -139,33 +139,33 @@ function verInfoUsuario(id) {
             </div>
             
             <!-- contenedor general de las cards -->
-            <div class="containerAvatar3d">
+            <div class="avatar-container contenedor1">
                 
-              <div class ="card-header-info" >
+              <div class =".avatar-container" >
                   //usuario contiene skills y categorias
                 <span>titulo</span>
               </div>
-                <div class="contenedor1" id="cards-container">
+              <div class="contenedor1 avatar-container" id="cards-container">
                   <--contiene la informacion detallada del usuario -->
-                </div>
-                <div class="card-header-info">
+              </div>
+              <div class="avatar-container contenedor1"">
                         <h2>info</h2>
                         <button id="botonCerrar">X</button>
                         // </div>
-                </div>
+              </div>
 
-                <div class="card-section">
+              <div class=".avatar-container contenedor1">
                         <div class="card-section-title">Nivel Backend</div>
                         ${renderBarras(Number(usuario.backend))}
-                </div>
+              </div>
 
-                <div class="card-section">
+                <div class=".avatar-container contenedor1">
                         <div class="card-section-title">Nivel Frontend</div>
                         ${renderBarras(Number(usuario.frontend))}
                 </div>
                 <div>${usuario.descripcion}</div>
                 <div>${usuario.enlaces}</div>
-                <div class="card-section">
+                <div class="card-section avatar-container">
                 <--<div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}-->
                 <button>contacto</button>
                 </div>
