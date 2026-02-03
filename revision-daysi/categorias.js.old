@@ -1,0 +1,150 @@
+// Variables globales
+let usuarios = [];
+
+// Función para mostrar mensajes
+function mostrarMensaje(tipo) {
+    const noResults = document.getElementById('no-results');
+    if (noResults) {
+        noResults.style.display = tipo === 'no-results' ? 'block' : 'none';
+    }
+}
+
+// Función principal para cargar usuarios
+async function cargarUsuarios() {
+    const loading = document.getElementById('loading');
+    const container = document.getElementById('cards-container');
+    const errorDiv = document.getElementById('error');
+    
+    try {
+        const response = await fetch('obtener_usuarios.php');
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
+        const resultado = await response.json();
+        
+        if (loading) loading.style.display = 'none';
+        
+        if (resultado.success) {
+            usuarios = resultado.data || [];
+            
+            if (usuarios.length === 0) {
+                mostrarMensaje('no-results');
+            } else {
+                generarCards(usuarios);
+            }
+        } else {
+            throw new Error(resultado.error || 'Error desconocido del servidor');
+        }
+        
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+        
+        if (loading) loading.style.display = 'none';
+        if (errorDiv) {
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = 'Error al cargar los usuarios: ' + error.message;
+        }
+    }
+}
+
+// Cargar categorías
+async function cargarCategorias() {
+    try {
+        const response = await fetch('obtener_categorias.php');
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const categorias = data.map(cat => cat.nombre);
+        generarCategorias(categorias);
+        
+    } catch (error) {
+        console.error('Error al cargar las categorías:', error);
+    }
+}
+
+// Función para generar cards de usuarios
+function generarCards(usuariosArray) {
+    const contenedorCard = document.querySelector('.contenedor-card');
+    
+    if (!contenedorCard) {
+        console.error('No se encontró el contenedor de cards');
+        return;
+    }
+    
+    contenedorCard.innerHTML = '';
+    
+    usuariosArray.forEach((usuario) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        
+        // Validar que existan los datos necesarios
+        const nombre = usuario.nombre || 'Sin nombre';
+        const avatar = usuario.avatar2D || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNDAiIHI9IjE1IiBmaWxsPSIjQ0NDIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9Ijc1IiByeD0iMjUiIHJ5PSIxNSIgZmlsbD0iI0NDQyIvPgo8L3N2Zz4K';
+        const especializacion = usuario.especializacion || 'Sin especialización';
+        
+        card.innerHTML = `
+            <h3>${nombre}</h3>
+            <img src="${avatar}" alt="Avatar de ${nombre}" 
+                 style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNDAiIHI9IjE1IiBmaWxsPSIjQ0NDIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9Ijc1IiByeD0iMjUiIHJ5PSIxNSIgZmlsbD0iI0NDQyIvPgo8L3N2Zz4K'; console.log('Imagen no encontrada:', '${avatar}');">
+            <p>Profesión: ${especializacion}</p>
+            <button class="abrir-modal btn-ver-mas" data-usuario='${JSON.stringify(usuario).replace(/'/g, "&apos;")}'>Ver más</button>
+        `;
+        
+        contenedorCard.appendChild(card);
+    });
+}
+
+// Función para generar botones de categorías
+function generarCategorias(categoriasArray) {
+    const contenedorBoton = document.querySelector('.contenedor-boton-categorias');
+    
+    if (!contenedorBoton) {
+        console.error('No se encontró el contenedor de botones de categorías');
+        return;
+    }
+    
+    contenedorBoton.innerHTML = '';
+    
+    // Botón para mostrar todas
+    const botonTodas = document.createElement('button');
+    botonTodas.classList.add('boton-categoria');
+    botonTodas.onclick = () => filtrarCategorias(null);
+    botonTodas.innerHTML = '<span class="nombre-categoria">Todas</span>';
+    contenedorBoton.appendChild(botonTodas);
+    
+    // Botones para cada categoría
+    categoriasArray.forEach((categoria) => {
+        const boton = document.createElement('button');
+        boton.classList.add('boton-categoria');
+        boton.onclick = () => filtrarCategorias(categoria);
+        boton.innerHTML = `<span class="nombre-categoria">${categoria}</span>`;
+        contenedorBoton.appendChild(boton);
+    });
+}
+
+// Función para filtrar por categorías
+function filtrarCategorias(categoriaSeleccionada) {
+    if (!categoriaSeleccionada) {
+        generarCards(usuarios);
+        return;
+    }
+    
+    const usuariosFiltrados = usuarios.filter(usuario => 
+        usuario.categorias && 
+        usuario.categorias.includes(categoriaSeleccionada)
+    );
+    
+    generarCards(usuariosFiltrados);
+}
+
+// Inicialización cuando se carga la página
+window.addEventListener('DOMContentLoaded', function() {
+    cargarUsuarios();
+    cargarCategorias();
+});
