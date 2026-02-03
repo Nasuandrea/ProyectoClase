@@ -176,22 +176,17 @@ Cada avatar incluirá:
 Los avatares aparecerán organizados en forma de **catálogo visual**, permitiendo al usuario:
 - Navegar entre los diferentes perfiles
 - Ver la información de cada uno
-- Comparar competencias
-
 ---
 
 ## 🛒 Sistema de Contratación
 
-Cuando el usuario seleccione un avatar y pulse en **“Contratar”**, se mostrará un **formulario de contratación** que incluirá:
+Cuando el usuario seleccione un avatar y pulse en **Icono “Contactar”**, se mostrará un **formulario de contacto** que incluirá:
 
 - 📝 Nombre del contratante  
 - 📧 Email de contacto  
-- 📞 Teléfono  
-- 📌 Servicio requerido  
-- 📅 Fecha o duración del servicio  
-- 💬 Observaciones adicionales  
+- 💬 Cuerpo del mensaje  
 
-Este formulario permitirá simular la contratación de los servicios ofrecidos por el avatar seleccionado.
+Este formulario permitirá contactar para proceder a la contratación de los servicios ofrecidos por el avatar seleccionado.
 
 ---
 
@@ -205,7 +200,7 @@ Crear una experiencia interactiva que combine:
 
 ---
 
-## 🔐 Sistema de Inicio de Sesión
+## 🔐 Sistema de Inicio de Sesión // Todavía no tiene esta funcionalidad - falta back y front
 
 La web contará con un **sistema de inicio de sesión** para que cada usuario pueda acceder a su perfil personal y gestionar su información.
 
@@ -221,16 +216,15 @@ Una vez autenticado, el usuario podrá:
 
 ---
 
-## 👤 Perfil de Usuario
+## 👤 Perfil de Usuario // Todavía no tiene esta funcionalidad en front, sí en back
 
 Cada usuario tendrá un panel privado donde podrá gestionar:
 
 - Nombre
 - Email
 - Descripción personal
-- Lista de competencias
-- Servicios que ofrece
-- Información visible en el catálogo
+- Lista de competencias/skills
+- Categorías a las que pertenece
 
 ---
 ```text
