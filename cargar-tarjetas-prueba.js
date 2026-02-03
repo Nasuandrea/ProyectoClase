@@ -138,20 +138,20 @@ function verInfoUsuario(id) {
                 // </button>
             </div>
             
-            <!-- contenedor general de las cards -->
+           
             <div class="avatar-container contenedor1">
                 
               <div class =".avatar-container" >
-                  //usuario contiene skills y categorias
+                 
                 <span>titulo</span>
               </div>
               <div class="contenedor1 avatar-container" id="cards-container">
-                  <--contiene la informacion detallada del usuario -->
+                 
               </div>
               <div class="avatar-container contenedor1"">
                         <h2>info</h2>
                         <button id="botonCerrar">X</button>
-                        // </div>
+                        
               </div>
 
               <div class=".avatar-container contenedor1">
@@ -166,7 +166,7 @@ function verInfoUsuario(id) {
                 <div>${usuario.descripcion}</div>
                 <div>${usuario.enlaces}</div>
                 <div class="card-section avatar-container">
-                <--<div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}-->
+                <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
                 <button>contacto</button>
                 </div>
             
