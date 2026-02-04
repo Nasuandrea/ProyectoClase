@@ -121,9 +121,10 @@ function verInfoUsuario(id) {
           //incluir el contenido de modal-tarjetas.html dentro. 
           card.innerHTML = `
           <!-- contenedor general de la card -->
-        <div id="mainGrid" data-user-id="${usuario.id}">
+        <div id="mainGrid" data-user-id="${usuario.id}" class="roster-grid"
           <!-- contenedor avatar 2d -->
-          <div class="avatar-container">
+          <div class="avatar-container character-card">
+          
             <h3>${usuario.nombre}</h3>
             <img class="img" src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
             <p>Profesión: ${usuario.especializacion}</p>
@@ -138,7 +139,8 @@ function verInfoUsuario(id) {
                     <p>Especialización: ${usuario.especializacion}</p>
                     <button class="btn-close">X</button>
                 </div>
-
+            <div class="flip-card-front">
+            <div class="contenedorAvatar">
               <div class="contenedor1">
                         <div class="card-section-title">Nivel Backend</div>
                         ${renderBarras(Number(usuario.backend))}
@@ -157,9 +159,17 @@ function verInfoUsuario(id) {
 
                 <div class="contenedor1">
                   <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
-                    <button onclick=".flip-card-inner">contacto</button>
+                    <button id="flipFormulario" onclick="flip()">contacto</button>
                   </div>
                 </div>
+                </div>
+                <div class="flip-card-back">
+                  <div class="contenedor1">
+                    <h2>Formulario de Contacto</h2>
+                    <form action="enviar_mensaje.php" method="POST"> 
+                    <button class="botonVolver" onclick="flipBack()">🔙</button> 
+                    </div>
+                  </div>
             </div>
         </div>
         `;
