@@ -5,4 +5,5 @@
 <!-- añado funcion onclick al boton de contacto que llama a flip-card.js
 linea 160 -->
 
-<!-- linea 178 se crea funcion para manejar el modal -->
+<!-- linea 178 se crea funcion para manejar el modal  con funcion flip.js-->
+** fin cambios

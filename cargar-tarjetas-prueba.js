@@ -124,14 +124,21 @@ function verInfoUsuario(id) {
         <div id="mainGrid" data-user-id="${usuario.id}" class="roster-grid"
           <!-- contenedor avatar 2d -->
           <div class="avatar-container character-card">
-          
+          <article class="character-card">
+          <header class="card-header">
             <h3>${usuario.nombre}</h3>
-            <img class="img" src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
-            <p>Profesión: ${usuario.especializacion}</p>
-            <button class="btn-open" data-id="${usuario.id}">Ver más</button>
+          </header>
+          <div class="player-badge">
+            <img class="img avatar-silhoutte" src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+          </div>
+          <div class="card-footer-info">
+            <span>Profesión: ${usuario.especializacion}</span>
+            <!--<button class="btn-open" data-id="${usuario.id}">Ver más</button>-->
+          </div>
+          </article>
           </div>
         
-        <!-- contenedor avatar 3d y skills (modal por tarjeta) -->
+        <!-- contenedor avatar 3d y skills (contenedor por tarjeta) -->
             <div class="containerAvatar3d con" style="display:none;">
                 <div class="contenedorAvatar">
                     <h3>${usuario.nombre}</h3>
@@ -139,6 +146,7 @@ function verInfoUsuario(id) {
                     <p>Especialización: ${usuario.especializacion}</p>
                     <button class="btn-close">X</button>
                 </div>
+                <!-- contenedor flip card (probar si lo puedo sacar) -->
             <div class="flip-card-front">
             <div class="contenedorAvatar">
               <div class="contenedor1">
