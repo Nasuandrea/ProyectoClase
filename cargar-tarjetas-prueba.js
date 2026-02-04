@@ -120,56 +120,46 @@ function verInfoUsuario(id) {
           // faltaria incluile las clases de css que necesiten
           //incluir el contenido de modal-tarjetas.html dentro. 
           card.innerHTML = `
-          // contenedor general de la card
-        <div id="mainGrid">
-          // contenedor avatar 2d
-          <div class="con" onclick=()>
+          <!-- contenedor general de la card -->
+        <div id="mainGrid" data-user-id="${usuario.id}">
+          <!-- contenedor avatar 2d -->
+          <div class="avatar-container">
             <h3>${usuario.nombre}</h3>
-            <img src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
+            <img class="img" src="${usuario.avatar2D}" alt="Avatar de ${usuario.nombre}">
             <p>Profesión: ${usuario.especializacion}</p>
-        </div>
+            <button class="btn-open" data-id="${usuario.id}">Ver más</button>
+          </div>
         
-        // contenedor avatar 3d y skills
-            <div class="avatar-container contenedor1">
-                // <button id="boton">
+        <!-- contenedor avatar 3d y skills (modal por tarjeta) -->
+            <div class="containerAvatar3d con" style="display:none;">
+                <div class="contenedorAvatar">
                     <h3>${usuario.nombre}</h3>
-                    <img src="${usuario.avatar3D}" alt="Avatar de ${usuario.nombre}">
+                    <img class="img" src="${usuario.avatar3D}" alt="Avatar 3D de ${usuario.nombre}">
                     <p>Especialización: ${usuario.especializacion}</p>
-                // </button>
-            </div>
-            
-           
-            <div class="avatar-container contenedor1">
-                
-              <div class =".avatar-container" >
-                 
-                <span>titulo</span>
-              </div>
-              <div class="contenedor1 avatar-container" id="cards-container">
-                 
-              </div>
-              <div class="avatar-container contenedor1"">
-                        <h2>info</h2>
-                        <button id="botonCerrar">X</button>
-                        
-              </div>
+                    <button class="btn-close">X</button>
+                </div>
 
-              <div class=".avatar-container contenedor1">
+              <div class="contenedor1">
                         <div class="card-section-title">Nivel Backend</div>
                         ${renderBarras(Number(usuario.backend))}
               </div>
 
-                <div class=".avatar-container contenedor1">
+                <div class="contenedor1">
                         <div class="card-section-title">Nivel Frontend</div>
                         ${renderBarras(Number(usuario.frontend))}
                 </div>
-                <div>${usuario.descripcion}</div>
-                <div>${usuario.enlaces}</div>
-                <div class="card-section avatar-container">
-                <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
-                <button>contacto</button>
+
+                <div class="contenedor1">
+                  <h2>Info</h2>
+                  <div>${usuario.descripcion}</div>
+                  <div>${usuario.enlaces}</div>
                 </div>
-            
+
+                <div class="contenedor1">
+                  <div class="card-location">📍 ${usuario.ciudad}, ${usuario.provincia}
+                    <button onclick=".flip-card-inner">contacto</button>
+                  </div>
+                </div>
             </div>
         </div>
         `;
@@ -183,6 +173,32 @@ function renderBarras(nivel) {
     html += `<span class="barra ${i <= nivel ? "rellena" : ""}"></span>`;
   }
   return `<div class="barras-container">${html}</div>`;
+}
+
+function setupCardModalHandlers() {
+  const container = document.querySelector('.contenedor-card');
+  if (!container) return;
+  container.addEventListener('click', (e) => {
+    const openBtn = e.target.closest('.btn-open');
+    if (openBtn) {
+      const card = openBtn.closest('.card');
+      const modal = card.querySelector('.containerAvatar3d');
+      if (modal) {
+        modal.style.display = 'flex';
+        const avatar = card.querySelector('.avatar-container');
+        if (avatar) avatar.style.display = 'none';
+      }
+      return;
+    }
+    const closeBtn = e.target.closest('.btn-close');
+    if (closeBtn) {
+      const card = closeBtn.closest('.card');
+      const modal = card.querySelector('.containerAvatar3d');
+      if (modal) modal.style.display = 'none';
+      const avatar = card.querySelector('.avatar-container');
+      if (avatar) avatar.style.display = 'block';
+    }
+  });
 }
 
 // ============================
@@ -259,6 +275,7 @@ async function cargarSkillsYCategorias() {
       }
       window.onload = function () {
         cargarUsuarios();
+        setupCardModalHandlers();
       };
 
       function filtrarCategorias(categoriaSeleccionada) {

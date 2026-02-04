@@ -1,9 +1,11 @@
 const boton = document.getElementById("boton");
 
+if (boton) {
     boton.addEventListener("click", ()=>{
         evento1(),
         evento2();
     });
+}
 
     function evento1(){
         const mostrar = document.querySelector(".con");
@@ -25,9 +27,11 @@ const boton = document.getElementById("boton");
     }
 
  const botonCerrar = document.querySelector("#botonCerrar");
- botonCerrar.addEventListener("click", () => {
-    cerrarModal();
- });
+ if (botonCerrar) {
+   botonCerrar.addEventListener("click", ()=>{
+      cerrarModal();
+   });
+ }
    
     function cerrarModal(){
         const cerrar = document.querySelector(".con");
