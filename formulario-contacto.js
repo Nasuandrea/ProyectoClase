@@ -51,7 +51,43 @@ async function contactar(userId) {
 }
 
 function limpiarFormularioContacto() {
-    const form = document.querySelector('#form-contacto');
-    const mensajeRespuesta = document.querySelector('#mensaje-respuesta');
-    
+  const form = document.querySelector("#form-contacto");
+  const mensajeRespuesta = document.querySelector("#mensaje-respuesta");
+
+  if (form) {
+    form.reset();
+  }
+  if (mensajeRespuesta) {
+    mensajeRespuesta.textContent = "";
+    mensajeRespuesta.ClassName = "Mensaje-respuesta";
+  }
+}
+
+// mostrar mensaje de respuesta al enviar el formulario
+function mostrarMensajeRespuesta(mensaje, tipo) {
+  const mensajeDiv = document.querySelector("#mensaje-respuesta");
+  if (!mensajeDiv) return;
+
+  mensajeDiv.textContent = mensaje;
+  mensajeDiv.className = `mensaje-respuesta ${tipo}`;
+
+  // eliminar mensaje despues de 5 segundos
+  if (tipo === "success") {
+    setTimeout(() => {
+      mensajeDiv.textContent = "";
+      mensajeDiv.className = "mensaje-respuesta";
+    }, 5000);
+  }
+}
+
+async function enviarFormularioContacto(event) {
+  event.preventDefault();
+
+  const form = document.querySelector("#form-contacto"); 
+  const btnEnviar= document.querySelector("#btn-enviar");
+  const btnIcon = document.querySelector("#btn-icon");
+
+  // recoger datos formulario
+  const formData = new FormData(form);
+
 }
