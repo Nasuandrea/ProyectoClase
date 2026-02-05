@@ -167,5 +167,39 @@
         }
     }
 
+    .third-footer {
+    position: relative;
+    height: 281px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* fondo real */
+    background-color: var(--color-tarjeta-titulo);
+    overflow: hidden;
+}
+
+.third-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 200px;
+    
+
+    /* color del SVG */
+    background-color: var(--color-principal);
+
+    /* SVG como máscara */
+    -webkit-mask-image: url(/img/AUTONOMIX.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: bottom;
+    -webkit-mask-size: contain;
+
+    mask-image: url(/img/AUTONOMIX.svg);
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    mask-size: contain;
+}
+
 
 
