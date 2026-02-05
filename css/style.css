@@ -39,6 +39,7 @@ body {
     padding: 20px 40px;
     position: sticky;
     top: 0;
+    z-index: 100;
 }
 
 .logo-section a {
@@ -244,7 +245,7 @@ body {
 }
 
 /* Responsividad pantallas pequeñas */
-@media (min-width: 577px) and (max-width: 600px) {
+@media (min-width: 577px) and (max-width: 768px) {
     :root {
         --borde: 2px solid;
     }
@@ -301,7 +302,7 @@ body {
 
     /* CARTAS VERTICALES */
     .roster-grid {
-        height: 500px;
+        /* height: 500px; */
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         padding: 20px;
@@ -339,7 +340,66 @@ body {
 }
 
 /* Responsividad pantallas medianas */
-@media (min-width: 768px) {}
+@media (min-width: 769px) and (max-width: 1140px) {
+
+    /* HEADER */
+    .brand-name {
+        font-size: 30px;
+    }
+
+    .slogan-name {
+        font-size: 30px;
+    }
+
+    .pill-search {
+        font-size: 18px;
+    }
+
+    .search-button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .user-pill {
+        font-size: 18px;
+    }
+
+    /* HERO */
+    .hero-gaming {
+        height: 175px;
+    }
+
+    .hero-box {
+        width: 600px;
+        height: 100px;
+    }
+
+    .hero-gaming h1 {
+        font-size: 38px;
+    }
+
+    /* CATEGORÍAS */
+    .cat-btn {
+        font-size: 18px;
+        padding: 10px;
+        border: solid 3px;
+    }
+
+    /* CARDS */
+    .roster-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .character-card {
+        height: 375px;
+    }
+
+    .card-header {
+        font-size: 18px;
+    }
+}
 
 /* Responsividad pantallas escritorio */
 @media (min-width: 992px) {}
