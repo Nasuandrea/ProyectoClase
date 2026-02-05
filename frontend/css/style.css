@@ -152,6 +152,7 @@ body {
 }
 
 .character-card {
+    height: 400px;
     background: var(--color-negro);
     border: var(--borde) var(--color-negro);
     box-shadow: 10px 10px 0px var(--color-sombra);
