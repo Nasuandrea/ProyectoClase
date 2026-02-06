@@ -1,16 +1,16 @@
 // Variables globales
-      let usuarios = [];
+let usuarios = [];
 
-      // Función para mostrar mensajes
-      function mostrarMensaje(tipo) {
-        const noResults = document.getElementById("no-results");
-        if (tipo === "no-results") {
-          noResults.style.display = "block";
-        } else {
-          noResults.style.display = "none";
-        }
-      }
-      // funcion para informacion de usuarios
+// Función para mostrar mensajes
+function mostrarMensaje(tipo) {
+  const noResults = document.getElementById("no-results");
+  if (tipo === "no-results") {
+    noResults.style.display = "block";
+  } else {
+    noResults.style.display = "none";
+  }
+}
+// funcion para informacion de usuarios
 function verInfoUsuario(id) {
   const container = document.getElementById("cards-container");
   if (!container) return;
@@ -40,86 +40,80 @@ function verInfoUsuario(id) {
               .join("")
           : '<span class="tag category">Sin categoría</span>';
 
-      
-
- // Reemplaza la tarjeta anterior
+      // Reemplaza la tarjeta anterior
       container.innerHTML = "";
       container.appendChild(card);
     })
     .catch((error) => console.error("Error al obtener info:", error));
 }
 
+// Función principal para cargar usuarios
+async function cargarUsuarios() {
+  const loading = document.getElementById("loading");
+  const container = document.getElementById("cards-container");
+  const errorDiv = document.getElementById("error");
 
-      // Función principal para cargar usuarios
-      async function cargarUsuarios() {
-        const loading = document.getElementById("loading");
-        const container = document.getElementById("cards-container");
-        const errorDiv = document.getElementById("error");
+  try {
+    const response = await fetch("obtener_usuarios.php");
 
-        try {
-          const response = await fetch("obtener_usuarios.php");
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor");
+    }
 
-          if (!response.ok) {
-            throw new Error("Error en la respuesta del servidor");
-          }
+    const resultado = await response.json();
 
-          const resultado = await response.json();
+    loading.style.display = "none";
 
-          loading.style.display = "none";
+    if (resultado.success) {
+      usuarios = resultado.data;
 
-          if (resultado.success) {
-            usuarios = resultado.data;
-
-            if (usuarios.length === 0) {
-              mostrarMensaje("no-results");
-            } else {
-              generarCards(usuarios);
-            }
-          } else {
-            throw new Error(resultado.error || "Error desconocido");
-          }
-        } catch (error) {
-          // estos estilos se generan dinamicamente y se tienen que mantener como esta aca
-          loading.style.display = "none";
-          errorDiv.style.display = "block";
-          errorDiv.textContent =
-            "Error al cargar los usuarios: " + error.message;
-          console.error("Error:", error);
-        }
+      if (usuarios.length === 0) {
+        mostrarMensaje("no-results");
+      } else {
+        generarCards(usuarios);
       }
+    } else {
+      throw new Error(resultado.error || "Error desconocido");
+    }
+  } catch (error) {
+    // estos estilos se generan dinamicamente y se tienen que mantener como esta aca
+    loading.style.display = "none";
+    errorDiv.style.display = "block";
+    errorDiv.textContent = "Error al cargar los usuarios: " + error.message;
+    console.error("Error:", error);
+  }
+}
 
-      //recogida de datos desde un archivo json
-      // let obtenerDatos ;
-      // fetch(obtenerDatos)
-      // .then(response => response.json())
-      let obtenerCategorias = "obtener_categorias.php";
-      let categorias = [];
-      fetch(obtenerCategorias)
-        .then((response) => response.json())
-        .then((data) => {
-          categorias = data.map((cat) => cat.nombre);
-          generarCategorias(categorias);
-        })
-        .catch((error) =>
-          console.error("Error al cargar las categorías:", error),
-        );
+//recogida de datos desde un archivo json
+// let obtenerDatos ;
+// fetch(obtenerDatos)
+// .then(response => response.json())
+let obtenerCategorias = "obtener_categorias.php";
+let categorias = [];
+fetch(obtenerCategorias)
+  .then((response) => response.json())
+  .then((data) => {
+    categorias = data.map((cat) => cat.nombre);
+    generarCategorias(categorias);
+  })
+  .catch((error) => console.error("Error al cargar las categorías:", error));
 
-      // const contenedorBoton = document.getElementById('contenedorBoton');
+// const contenedorBoton = document.getElementById('contenedorBoton');
 
-      //function generar cards automaticas
+//function generar cards automaticas
 
-      //falta recoger el id desde el backend
-      function generarCards(usuarios) {
-        let contenedorCard = document.querySelector(".contenedor-card");
-        contenedorCard.innerHTML = "";
-        //recorrido del array usuarios
-        usuarios.forEach((usuario) => {
-          let card = document.createElement("div");
-          card.classList.add("card");
-          // contenedor de lo que tiene dentro la card
-          // faltaria incluile las clases de css que necesiten
-          //incluir el contenido de modal-tarjetas.html dentro. 
-          card.innerHTML = `
+//falta recoger el id desde el backend
+function generarCards(usuarios) {
+  let contenedorCard = document.querySelector(".contenedor-card");
+  contenedorCard.innerHTML = "";
+  //recorrido del array usuarios
+  usuarios.forEach((usuario) => {
+    let card = document.createElement("div");
+    card.classList.add("card");
+    // contenedor de lo que tiene dentro la card
+    // faltaria incluile las clases de css que necesiten
+    //incluir el contenido de modal-tarjetas.html dentro.
+    card.innerHTML = `
           <!-- contenedor general de la card -->
         <div id="mainGrid" data-user-id="${usuario.id}" class="roster-grid"
           <!-- contenedor avatar 2d -->
@@ -172,18 +166,92 @@ function verInfoUsuario(id) {
                 </div>
                 </div>
                 <div class="flip-card-back">
-                  <div class="contenedor1">
-                    <h2>Formulario de Contacto</h2>
-                    <form action="enviar_mensaje.php" method="POST"> 
-                    <button class="botonVolver" onclick="flipBack()">🔙</button> 
-                    </div>
+                
+                <!-- Aquí va el contenido del formulario de contacto -->
+                   <div id="modal-contacto" class="modal-overlay">
+    <div class="modal-container">
+        <!-- Botón de cerrar -->
+        <button class="modal-close" onclick="cerrarModalContacto()">&times;</button>
+        
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+            <h2>Contactar Profesional</h2>
+            <p id="modal-destinatario">Enviando mensaje a: <strong id="nombre-destinatario"></strong></p>
+        </div>
+
+        <!-- Formulario de contacto -->
+        <form id="form-contacto" class="modal-form">
+            <!-- Email destinatario (oculto) -->
+            <input type="hidden" id="email-destinatario" name="email_destinatario">
+            
+            <!-- Nombre del interesado -->
+            <div class="form-group">
+                <label for="nombre-remitente">Tu nombre *</label>
+                <input 
+                    type="text" 
+                    id="nombre-remitente" 
+                    name="nombre_remitente" 
+                    required
+                    placeholder="Ej: Juan Pérez">
+            </div>
+
+            <!-- Email del interesado -->
+            <div class="form-group">
+                <label for="email-remitente">Tu correo electrónico *</label>
+                <input 
+                    type="email" 
+                    id="email-remitente" 
+                    name="email_remitente" 
+                    required
+                    placeholder="tu@email.com">
+            </div>
+
+            <!-- Asunto -->
+            <div class="form-group">
+                <label for="asunto">Asunto *</label>
+                <input 
+                    type="text" 
+                    id="asunto" 
+                    name="asunto" 
+                    required
+                    placeholder="Ej: Propuesta de colaboración">
+            </div>
+
+            <!-- Mensaje -->
+            <div class="form-group">
+                <label for="mensaje">Mensaje *</label>
+                <textarea 
+                    id="mensaje" 
+                    name="mensaje" 
+                    required
+                    rows="6"
+                    placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+
+            <!-- Mensaje de respuesta -->
+            <div id="mensaje-respuesta" class="mensaje-respuesta"></div>
+
+            <!-- Botones de acción -->
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalContacto()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-enviar">
+                    <svg id="btn-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 24H18V22H20V24ZM22 18H24V20H22V22H20V20H14V18H20V16H22V18ZM22 12H20V6H4V18H12V20H2V4H22V12ZM20 16H18V14H20V16ZM14 14H10V12H14V14ZM10 12H8V10H10V12ZM16 12H14V10H16V12ZM8 10H6V8H8V10ZM18 10H16V8H18V10Z" fill="#1F2933"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
                   </div>
             </div>
         </div>
         `;
-          contenedorCard.appendChild(card);
-        });
-      }
+    contenedorCard.appendChild(card);
+  });
+}
 
 function renderBarras(nivel) {
   let html = "";
@@ -194,27 +262,27 @@ function renderBarras(nivel) {
 }
 
 function setupCardModalHandlers() {
-  const container = document.querySelector('.contenedor-card');
+  const container = document.querySelector(".contenedor-card");
   if (!container) return;
-  container.addEventListener('click', (e) => {
-    const openBtn = e.target.closest('.btn-open');
+  container.addEventListener("click", (e) => {
+    const openBtn = e.target.closest(".btn-open");
     if (openBtn) {
-      const card = openBtn.closest('.card');
-      const modal = card.querySelector('.containerAvatar3d');
+      const card = openBtn.closest(".card");
+      const modal = card.querySelector(".containerAvatar3d");
       if (modal) {
-        modal.style.display = 'flex';
-        const avatar = card.querySelector('.avatar-container');
-        if (avatar) avatar.style.display = 'none';
+        modal.style.display = "flex";
+        const avatar = card.querySelector(".avatar-container");
+        if (avatar) avatar.style.display = "none";
       }
       return;
     }
-    const closeBtn = e.target.closest('.btn-close');
+    const closeBtn = e.target.closest(".btn-close");
     if (closeBtn) {
-      const card = closeBtn.closest('.card');
-      const modal = card.querySelector('.containerAvatar3d');
-      if (modal) modal.style.display = 'none';
-      const avatar = card.querySelector('.avatar-container');
-      if (avatar) avatar.style.display = 'block';
+      const card = closeBtn.closest(".card");
+      const modal = card.querySelector(".containerAvatar3d");
+      if (modal) modal.style.display = "none";
+      const avatar = card.querySelector(".avatar-container");
+      if (avatar) avatar.style.display = "block";
     }
   });
 }
@@ -259,52 +327,41 @@ async function cargarSkillsYCategorias() {
   }
 }
 
+//funcion de categorias y filtro por categorias
 
+//añado contenido dinamico que variaria segun la estructura del boton
 
+function generarCategorias(categorias) {
+  let contenerdorBoton = document.querySelector(".contenedor-boton-categorias");
+  contenerdorBoton.innerHTML = "";
+  // Botón para mostrar todas
+  let botonTodas = document.createElement("button");
+  botonTodas.classList.add("boton-categoria");
+  botonTodas.onclick = () => filtrarCategorias(null);
+  botonTodas.innerHTML = `<span class="nombre-categoria">Todas</span>`;
+  contenerdorBoton.appendChild(botonTodas);
+  //recorrer el array categorias y crear un boton por cada categoria
+  categorias.forEach((categoria) => {
+    let boton = document.createElement("button");
+    boton.classList.add("boton-categoria");
+    boton.onclick = () => filtrarCategorias(categoria);
+    boton.innerHTML = `<span class="nombre-categoria">${categoria}</span>`;
+    contenerdorBoton.appendChild(boton);
+  });
+}
+window.onload = function () {
+  cargarUsuarios();
+  setupCardModalHandlers();
+};
 
-
-
-
-
-
-      //funcion de categorias y filtro por categorias
-
-      //añado contenido dinamico que variaria segun la estructura del boton
-
-      function generarCategorias(categorias) {
-        let contenerdorBoton = document.querySelector(
-          ".contenedor-boton-categorias",
-        );
-        contenerdorBoton.innerHTML = "";
-        // Botón para mostrar todas
-        let botonTodas = document.createElement("button");
-        botonTodas.classList.add("boton-categoria");
-        botonTodas.onclick = () => filtrarCategorias(null);
-        botonTodas.innerHTML = `<span class="nombre-categoria">Todas</span>`;
-        contenerdorBoton.appendChild(botonTodas);
-        //recorrer el array categorias y crear un boton por cada categoria
-        categorias.forEach((categoria) => {
-          let boton = document.createElement("button");
-          boton.classList.add("boton-categoria");
-          boton.onclick = () => filtrarCategorias(categoria);
-          boton.innerHTML = `<span class="nombre-categoria">${categoria}</span>`;
-          contenerdorBoton.appendChild(boton);
-        });
-      }
-      window.onload = function () {
-        cargarUsuarios();
-        setupCardModalHandlers();
-      };
-
-      function filtrarCategorias(categoriaSeleccionada) {
-        if (!categoriaSeleccionada) {
-          generarCards(usuarios);
-          return;
-        }
-        const usuariosFiltrados = usuarios.filter(
-          (usuario) =>
-            usuario.categorias &&
-            usuario.categorias.includes(categoriaSeleccionada),
-        );
-        generarCards(usuariosFiltrados);
-      }
+function filtrarCategorias(categoriaSeleccionada) {
+  if (!categoriaSeleccionada) {
+    generarCards(usuarios);
+    return;
+  }
+  const usuariosFiltrados = usuarios.filter(
+    (usuario) =>
+      usuario.categorias && usuario.categorias.includes(categoriaSeleccionada),
+  );
+  generarCards(usuariosFiltrados);
+}
