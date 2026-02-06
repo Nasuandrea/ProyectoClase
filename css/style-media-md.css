@@ -1,0 +1,74 @@
+/* Responsividad pantallas medianas */
+@media (min-width: 769px) and (max-width: 1140px) {
+
+    /* HEADER */
+    .brand-name {
+        font-size: 30px;
+    }
+
+    .slogan-name {
+        font-size: 30px;
+    }
+
+    .pill-search {
+        font-size: 18px;
+    }
+
+    .search-button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .user-pill {
+        font-size: 18px;
+    }
+
+    /* HERO */
+    .hero-gaming {
+        height: 175px;
+    }
+
+    .hero-box {
+        width: 600px;
+        height: 100px;
+    }
+
+    .hero-gaming h1 {
+        font-size: 38px;
+    }
+
+    /* CATEGORÍAS */
+    .cat-btn {
+        font-size: 18px;
+        padding: 10px;
+        border: solid 3px;
+    }
+
+    /* CARDS */
+    .roster-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card-header {
+        font-size: 18px;
+    }
+
+    .avatar-silhouette {
+        width: 216px;
+        height: 248px;
+    }
+
+    /* FOOTER */
+    .first-footer {
+        height: 150px;
+        font-size: 18px;
+        padding: 15px 30px;
+    }
+
+    .second-footer {
+        padding: 15px 30px;
+        font-size: 14px;
+    }
+}

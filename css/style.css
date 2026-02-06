@@ -392,12 +392,25 @@ body {
         padding: 20px;
     }
 
-    .character-card {
-        height: 375px;
-    }
-
     .card-header {
         font-size: 18px;
+    }
+
+    .avatar-silhouette {
+        width: 216px;
+        height: 248px;
+    }
+
+    /* FOOTER */
+    .first-footer {
+        height: 150px;
+        font-size: 18px;
+        padding: 15px 30px;
+    }
+
+    .second-footer {
+        padding: 15px 30px;
+        font-size: 14px;
     }
 }
 

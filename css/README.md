@@ -4,6 +4,6 @@ style.css Línea 42 .main-header - Añadido z-index 100, para que el sticky siem
 
 style.css Línea 227 .second-footer .brand-name - Añadido para que las fuentes no sean en negrita
 
-style.css Línea 246 - Añadido @media para dispositivos pequeños
+Creado style-media-s.css - Añadido @media para dispositivos pequeños
 
-style.css Línea 342 - Añadido @media para dispositivos medianos (en proceso)
+Creado style-media-md.css - Añadido @media para dispositivos medianos (en proceso)

@@ -1,0 +1,94 @@
+/* Responsividad pantallas pequeñas */
+@media (min-width: 577px) and (max-width: 768px) {
+    :root {
+        --borde: 2px solid;
+    }
+
+    /* HEADER */
+    .main-header {
+        gap: 30px;
+    }
+
+    .brand-name {
+        font-size: 20px;
+    }
+
+    .slogan-name {
+        font-size: 20px;
+    }
+
+    .pill-search {
+        font-size: 14px;
+    }
+
+    .search-button svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .user-pill {
+        font-size: 14px;
+    }
+
+    /* HERO */
+    .hero-gaming {
+        height: 150px;
+    }
+
+    .hero-box {
+        width: 520px;
+        height: 94px;
+    }
+
+    .hero-gaming h1 {
+        font-size: 34px;
+    }
+
+    /* CATEGORÍAS 6x2 */
+    .categories-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .cat-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    /* CARTAS VERTICALES */
+    .roster-grid {
+        /* height: 500px; */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card-header {
+        font-size: 14px;
+    }
+
+    .avatar-silhouette {
+        width: 192px;
+        height: 220px;
+    }
+
+    /* FOOTER */
+    .first-footer {
+        height: 120px;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .second-footer {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    .third-footer {
+        height: 120px;
+    }
+
+    .third-footer svg {
+        width: 584px;
+        height: 89px;
+    }
+}
